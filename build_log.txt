@@ -1,0 +1,854 @@
+[00:14:42.146] Running dpkg
+[00:14:42.165] Command [PID: 31473]:
+    dpkg --print-architecture
+[00:14:42.165] Output:
+    amd64
+[00:14:42.168] Returned: 0
+
+[00:14:42.180] Running dpkg-deb
+[00:14:42.196] Running dpkg-deb
+[00:14:42.198] Running dpkg
+[00:14:42.201] Running fakeroot
+[00:14:42.206] Running dpkg
+[00:14:42.234] Command [PID: 31481]:
+    dpkg -s coreutils
+[00:14:42.234] Output:
+    Package: coreutils
+    Essential: yes
+    Status: install ok installed
+    Priority: required
+    Section: utils
+    Installed-Size: 6944
+    Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+    Architecture: amd64
+    Multi-Arch: foreign
+    Version: 9.4-3ubuntu6.1
+    Pre-Depends: libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.48), libc6 (>= 2.38), libgmp10 (>= 2:6.3.0+dfsg), libselinux1 (>= 3.1~), libssl3t64 (>= 3.0.0)
+    Breaks: usrmerge (<< 39)
+    Description: GNU core utilities
+     This package contains the basic file, shell and text manipulation
+     utilities which are expected to exist on every operating system.
+     .
+     Specifically, this package includes:
+     arch base64 basename cat chcon chgrp chmod chown chroot cksum comm cp
+     csplit cut date dd df dir dircolors dirname du echo env expand expr
+     factor false flock fmt fold groups head hostid id install join link ln
+     logname ls md5sum mkdir mkfifo mknod mktemp mv nice nl nohup nproc numfmt
+     od paste pathchk pinky pr printenv printf ptx pwd readlink realpath rm
+     rmdir runcon sha*sum seq shred sleep sort split stat stty sum sync tac
+     tail tee test timeout touch tr true truncate tsort tty uname unexpand
+     uniq unlink users vdir wc who whoami yes
+    Homepage: http://gnu.org/software/coreutils
+    Original-Maintainer: Michael Stone <mstone@debian.org>
+[00:14:42.234] Returned: 0
+
+[00:14:42.235] Running ldd
+[00:14:42.240] Debian packages should specify a license. The absence of a license will cause some linux distributions to complain about the quality of the application.
+[00:14:50.751] Command [PID: -1]:
+    jlink --output /tmp/jdk.jpackage11827914295784946882/images/src/PackingList/lib/runtime --module-path /usr/lib/jvm/java-21-openjdk-amd64/jmods --add-modules jdk.management.jfr,java.rmi,jdk.jdi,jdk.charsets,java.xml,jdk.xml.dom,java.datatransfer,jdk.jstatd,jdk.httpserver,java.desktop,java.security.sasl,jdk.zipfs,java.base,jdk.crypto.ec,jdk.javadoc,jdk.management.agent,jdk.jshell,jdk.editpad,jdk.sctp,jdk.jsobject,java.sql.rowset,jdk.jlink,jdk.unsupported,java.smartcardio,java.security.jgss,java.compiler,jdk.nio.mapmode,jdk.dynalink,jdk.unsupported.desktop,jdk.accessibility,jdk.security.jgss,jdk.incubator.vector,java.sql,java.xml.crypto,java.transaction.xa,java.logging,jdk.jfr,jdk.crypto.cryptoki,jdk.random,jdk.net,java.naming,jdk.internal.ed,java.prefs,java.net.http,jdk.compiler,jdk.naming.rmi,jdk.internal.opt,jdk.jconsole,jdk.attach,jdk.internal.le,java.management,jdk.jdwp.agent,jdk.internal.jvmstat,java.instrument,jdk.management,jdk.security.auth,java.scripting,jdk.jdeps,jdk.jartool,jdk.jpackage,java.management.rmi,jdk.naming.dns,jdk.localedata --strip-native-commands --strip-debug --no-man-pages --no-header-files
+[00:14:50.751] Output:
+    WARNING: Using incubator modules: jdk.incubator.vector
+
+[00:14:50.751] Returned: 0
+
+[00:14:50.759] Using custom package resource [icon] (loaded from file /home/matias/Descargas/PackingListApp/src/main/resources/icon.png).
+[00:14:50.900] Running ldd
+[00:14:50.908] Command [PID: 31607]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/libapplauncher.so
+[00:14:50.908] Output:
+    	linux-vdso.so.1 (0x00007d87683fc000)
+    	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007d8768000000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007d87682d1000)
+    	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007d87682a3000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007d8767c00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007d87683fe000)
+[00:14:50.908] Returned: 0
+
+[00:14:50.909] Running ldd
+[00:14:50.915] Command [PID: 31614]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjdwp.so
+[00:14:50.915] Output:
+    	linux-vdso.so.1 (0x00007493ff007000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007493fef97000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007493fec00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007493ff009000)
+    	libjvm.so => not found
+[00:14:50.915] Returned: 0
+
+[00:14:50.916] Running ldd
+[00:14:50.922] Command [PID: 31622]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libj2pcsc.so
+[00:14:50.922] Output:
+    	linux-vdso.so.1 (0x000074f74ab9b000)
+    	libpcsclite.so.1 => /lib/x86_64-linux-gnu/libpcsclite.so.1 (0x000074f74ab71000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000074f74a800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000074f74ab9d000)
+[00:14:50.922] Returned: 0
+
+[00:14:50.922] Running ldd
+[00:14:50.929] Command [PID: 31630]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libsctp.so
+[00:14:50.929] Output:
+    	linux-vdso.so.1 (0x00007f0bf26d4000)
+    	libnio.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libnio.so (0x00007f0bf26ae000)
+    	libnet.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libnet.so (0x00007f0bf269f000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007f0bf267b000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f0bf2400000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007f0bf26d6000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+[00:14:50.929] Returned: 0
+
+[00:14:50.929] Running ldd
+[00:14:50.935] Command [PID: 31637]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libextnet.so
+[00:14:50.935] Output:
+    	linux-vdso.so.1 (0x000079fde940c000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000079fde93db000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000079fde9000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000079fde940e000)
+    	libjvm.so => not found
+[00:14:50.935] Returned: 0
+
+[00:14:50.936] Running ldd
+[00:14:50.942] Command [PID: 31645]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libattach.so
+[00:14:50.942] Output:
+    	linux-vdso.so.1 (0x000078bd6428b000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000078bd6425a000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000078bd64000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000078bd6428d000)
+    	libjvm.so => not found
+[00:14:50.942] Returned: 0
+
+[00:14:50.942] Running ldd
+[00:14:50.948] Command [PID: 31652]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libsyslookup.so
+[00:14:50.948] Output:
+    	linux-vdso.so.1 (0x000078a815a4b000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000078a815800000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000078a815717000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000078a815a4d000)
+[00:14:50.949] Returned: 0
+
+[00:14:50.949] Running ldd
+[00:14:50.955] Command [PID: 31659]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libprefs.so
+[00:14:50.955] Output:
+    	linux-vdso.so.1 (0x00007be601760000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007be60171f000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007be601400000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007be601762000)
+    	libjvm.so => not found
+[00:14:50.955] Returned: 0
+
+[00:14:50.955] Running ldd
+[00:14:50.962] Command [PID: 31666]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/jspawnhelper
+[00:14:50.962] Output:
+    	linux-vdso.so.1 (0x00007dcc862a8000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007dcc86000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007dcc862aa000)
+[00:14:50.962] Returned: 0
+
+[00:14:50.962] Running ldd
+[00:14:50.968] Command [PID: 31673]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libmanagement.so
+[00:14:50.968] Output:
+    	linux-vdso.so.1 (0x000073a59a925000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000073a59a8f3000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000073a59a600000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000073a59a927000)
+    	libjvm.so => not found
+[00:14:50.968] Returned: 0
+
+[00:14:50.969] Running ldd
+[00:14:50.974] Command [PID: 31680]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libj2gss.so
+[00:14:50.975] Output:
+    	linux-vdso.so.1 (0x000071f1b5bfe000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000071f1b5800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000071f1b5c00000)
+[00:14:50.975] Returned: 0
+
+[00:14:50.975] Running ldd
+[00:14:50.982] Command [PID: 31687]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libmanagement_ext.so
+[00:14:50.982] Output:
+    	linux-vdso.so.1 (0x0000746d0eeff000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x0000746d0eecb000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000746d0ec00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000746d0ef01000)
+    	libjvm.so => not found
+[00:14:50.982] Returned: 0
+
+[00:14:50.982] Running ldd
+[00:14:50.988] Command [PID: 31694]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjsvml.so
+[00:14:50.988] Output:
+    	linux-vdso.so.1 (0x00007595d8969000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007595d8600000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007595d896b000)
+[00:14:50.988] Returned: 0
+
+[00:14:50.988] Running ldd
+[00:14:50.995] Command [PID: 31701]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjawt.so
+[00:14:50.995] Output:
+    	linux-vdso.so.1 (0x0000785dcbabf000)
+    	libawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so (0x0000785dcb9bf000)
+    	libawt_xawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt_xawt.so (0x0000785dcb940000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x0000785dcb91c000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000785dcb600000)
+    	libjvm.so => not found
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x0000785dcb821000)
+    	libXext.so.6 => /lib/x86_64-linux-gnu/libXext.so.6 (0x0000785dcb5ec000)
+    	libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x0000785dcb4af000)
+    	libXrender.so.1 => /lib/x86_64-linux-gnu/libXrender.so.1 (0x0000785dcb815000)
+    	libXtst.so.6 => /lib/x86_64-linux-gnu/libXtst.so.6 (0x0000785dcb4a7000)
+    	libXi.so.6 => /lib/x86_64-linux-gnu/libXi.so.6 (0x0000785dcb494000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000785dcbac1000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+    	libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x0000785dcb46b000)
+    	libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x0000785dcb463000)
+    	libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x0000785dcb45b000)
+    	libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x0000785dcb445000)
+    	libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x0000785dcb436000)
+[00:14:50.996] Returned: 0
+
+[00:14:50.996] Running ldd
+[00:14:51.001] Command [PID: 31708]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/jexec
+[00:14:51.002] Output:
+    	linux-vdso.so.1 (0x000075fa69985000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000075fa69600000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000075fa69987000)
+[00:14:51.002] Returned: 0
+
+[00:14:51.002] Running ldd
+[00:14:51.008] Command [PID: 31716]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjsig.so
+[00:14:51.008] Output:
+    	linux-vdso.so.1 (0x0000759894245000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000759894000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000759894247000)
+[00:14:51.008] Returned: 0
+
+[00:14:51.008] Running ldd
+[00:14:51.014] Command [PID: 31723]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjimage.so
+[00:14:51.014] Output:
+    	linux-vdso.so.1 (0x0000734397126000)
+    	libjvm.so => not found
+    	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x0000734396e00000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x0000734396d17000)
+    	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007343970d8000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000734396a00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000734397128000)
+[00:14:51.014] Returned: 0
+
+[00:14:51.015] Running ldd
+[00:14:51.020] Command [PID: 31730]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjaas.so
+[00:14:51.020] Output:
+    	linux-vdso.so.1 (0x00007f1dad5f9000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1dad200000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007f1dad5fb000)
+[00:14:51.021] Returned: 0
+
+[00:14:51.021] Running ldd
+[00:14:51.027] Command [PID: 31737]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjsound.so
+[00:14:51.027] Output:
+    	linux-vdso.so.1 (0x00007f5c4d8e7000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007f5c4d8a9000)
+    	libjvm.so => not found
+    	libasound.so.2 => /lib/x86_64-linux-gnu/libasound.so.2 (0x00007f5c4d78f000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5c4d400000)
+    	libjvm.so => not found
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f5c4d6a4000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007f5c4d8e9000)
+[00:14:51.027] Returned: 0
+
+[00:14:51.027] Running ldd
+[00:14:51.034] Command [PID: 31744]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt_xawt.so
+[00:14:51.034] Output:
+    	linux-vdso.so.1 (0x000079d186b5f000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000079d1869df000)
+    	libawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so (0x000079d1868ec000)
+    	libXext.so.6 => /lib/x86_64-linux-gnu/libXext.so.6 (0x000079d1868d8000)
+    	libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x000079d18679b000)
+    	libXrender.so.1 => /lib/x86_64-linux-gnu/libXrender.so.1 (0x000079d18678f000)
+    	libXtst.so.6 => /lib/x86_64-linux-gnu/libXtst.so.6 (0x000079d186785000)
+    	libXi.so.6 => /lib/x86_64-linux-gnu/libXi.so.6 (0x000079d186772000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000079d18674e000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000079d186400000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000079d186b61000)
+    	libjvm.so => not found
+    	libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x000079d186723000)
+    	libjvm.so => not found
+    	libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x000079d18671d000)
+    	libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000079d186715000)
+    	libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x000079d1866fd000)
+    	libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x000079d1866ee000)
+[00:14:51.034] Returned: 0
+
+[00:14:51.034] Running ldd
+[00:14:51.042] Command [PID: 31751]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libzip.so
+[00:14:51.042] Output:
+    	linux-vdso.so.1 (0x000071a569193000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000071a56914c000)
+    	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x000071a569130000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000071a568e00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000071a569195000)
+    	libjvm.so => not found
+[00:14:51.042] Returned: 0
+
+[00:14:51.043] Running ldd
+[00:14:51.049] Command [PID: 31758]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libnet.so
+[00:14:51.049] Output:
+    	linux-vdso.so.1 (0x000070cd47d9f000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000070cd47d54000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000070cd47a00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000070cd47da1000)
+    	libjvm.so => not found
+[00:14:51.049] Returned: 0
+
+[00:14:51.050] Running ldd
+[00:14:51.056] Command [PID: 31765]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libmanagement_agent.so
+[00:14:51.056] Output:
+    	linux-vdso.so.1 (0x00007a6a84145000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007a6a84114000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007a6a83e00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007a6a84147000)
+    	libjvm.so => not found
+[00:14:51.056] Returned: 0
+
+[00:14:51.057] Running ldd
+[00:14:51.063] Command [PID: 31772]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/librmi.so
+[00:14:51.063] Output:
+    	linux-vdso.so.1 (0x00007419d4a42000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007419d4800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007419d4a44000)
+[00:14:51.063] Returned: 0
+
+[00:14:51.063] Running ldd
+[00:14:51.071] Command [PID: 31779]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libinstrument.so
+[00:14:51.071] Output:
+    	linux-vdso.so.1 (0x00007b8260aa4000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007b8260a6b000)
+    	libjvm.so => not found
+    	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007b8260a3f000)
+    	libjli.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjli.so (0x00007b8260a2e000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007b8260800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007b8260aa6000)
+    	libjvm.so => not found
+[00:14:51.071] Returned: 0
+
+[00:14:51.071] Running ldd
+[00:14:51.077] Command [PID: 31786]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libnio.so
+[00:14:51.077] Output:
+    	linux-vdso.so.1 (0x00007d2821a65000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007d2821a23000)
+    	libnet.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libnet.so (0x00007d2821a14000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007d2821600000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007d2821a67000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+[00:14:51.077] Returned: 0
+
+[00:14:51.078] Running ldd
+[00:14:51.084] Command [PID: 31793]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libj2pkcs11.so
+[00:14:51.084] Output:
+    	linux-vdso.so.1 (0x00007158fcb7c000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007158fc800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007158fcb7e000)
+[00:14:51.084] Returned: 0
+
+[00:14:51.084] Running ldd
+[00:14:51.092] Command [PID: 31800]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libsplashscreen.so
+[00:14:51.092] Output:
+    	linux-vdso.so.1 (0x000073ef94b07000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x000073ef94acc000)
+    	libjvm.so => not found
+    	libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x000073ef9497f000)
+    	libXext.so.6 => /lib/x86_64-linux-gnu/libXext.so.6 (0x000073ef9496b000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000073ef94882000)
+    	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x000073ef94864000)
+    	libgif.so.7 => /lib/x86_64-linux-gnu/libgif.so.7 (0x000073ef94859000)
+    	libjpeg.so.8 => /lib/x86_64-linux-gnu/libjpeg.so.8 (0x000073ef947d6000)
+    	libpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x000073ef9479e000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000073ef94400000)
+    	libjvm.so => not found
+    	libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x000073ef94773000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000073ef94b09000)
+    	libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x000073ef9476d000)
+    	libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x000073ef94765000)
+    	libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x000073ef9474f000)
+    	libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x000073ef94740000)
+[00:14:51.092] Returned: 0
+
+[00:14:51.092] Running ldd
+[00:14:51.099] Command [PID: 31807]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/liblcms.so
+[00:14:51.099] Output:
+    	linux-vdso.so.1 (0x00007fadd15da000)
+    	libawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so (0x00007fadd14d8000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007fadd14a4000)
+    	liblcms2.so.2 => /lib/x86_64-linux-gnu/liblcms2.so.2 (0x00007fadd1442000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fadd1359000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fadd1000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007fadd15dc000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+[00:14:51.099] Returned: 0
+
+[00:14:51.099] Running ldd
+[00:14:51.106] Command [PID: 31814]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libdt_socket.so
+[00:14:51.106] Output:
+    	linux-vdso.so.1 (0x000075ed52741000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000075ed52400000)
+    	/lib64/ld-linux-x86-64.so.2 (0x000075ed52743000)
+[00:14:51.106] Returned: 0
+
+[00:14:51.106] Running ldd
+[00:14:51.113] Command [PID: 31821]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libverify.so
+[00:14:51.113] Output:
+    	linux-vdso.so.1 (0x0000702332aa9000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000702332800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000702332aab000)
+[00:14:51.113] Returned: 0
+
+[00:14:51.113] Running ldd
+[00:14:51.120] Command [PID: 31828]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjli.so
+[00:14:51.120] Output:
+    	linux-vdso.so.1 (0x0000704fa9b26000)
+    	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x0000704fa9ae1000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000704fa9800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000704fa9b28000)
+[00:14:51.120] Returned: 0
+
+[00:14:51.120] Running ldd
+[00:14:51.128] Command [PID: 31835]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libfontmanager.so
+[00:14:51.128] Output:
+    	linux-vdso.so.1 (0x0000738639106000)
+    	libharfbuzz.so.0 => /lib/x86_64-linux-gnu/libharfbuzz.so.0 (0x0000738638fd1000)
+    	libfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x0000738638f05000)
+    	libawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so (0x0000738638e12000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x0000738638dee000)
+    	libjvm.so => not found
+    	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x0000738638a00000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x0000738638d03000)
+    	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x0000738638cd5000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000738638600000)
+    	libglib-2.0.so.0 => /lib/x86_64-linux-gnu/libglib-2.0.so.0 (0x00007386388b7000)
+    	libgraphite2.so.3 => /lib/x86_64-linux-gnu/libgraphite2.so.3 (0x0000738638caf000)
+    	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x0000738638c91000)
+    	libbz2.so.1.0 => /lib/x86_64-linux-gnu/libbz2.so.1.0 (0x00007386388a3000)
+    	libpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x000073863886b000)
+    	libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x0000738638c83000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000738639108000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+    	libpcre2-8.so.0 => /lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x0000738638566000)
+    	libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x0000738638848000)
+[00:14:51.128] Returned: 0
+
+[00:14:51.129] Running ldd
+[00:14:51.136] Command [PID: 31842]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjavajpeg.so
+[00:14:51.136] Output:
+    	linux-vdso.so.1 (0x00007d6a4ec07000)
+    	libjpeg.so.8 => /lib/x86_64-linux-gnu/libjpeg.so.8 (0x00007d6a4eb60000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007d6a4eb3c000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007d6a4e800000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007d6a4ec09000)
+    	libjvm.so => not found
+[00:14:51.136] Returned: 0
+
+[00:14:51.136] Running ldd
+[00:14:51.143] Command [PID: 31849]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/lible.so
+[00:14:51.143] Output:
+    	linux-vdso.so.1 (0x00007e5af33b3000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007e5af3382000)
+    	libjvm.so => not found
+    	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007e5af3000000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007e5af3289000)
+    	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007e5af2fd2000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007e5af2c00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007e5af33b5000)
+    	libjvm.so => not found
+[00:14:51.143] Returned: 0
+
+[00:14:51.143] Running ldd
+[00:14:51.150] Command [PID: 31856]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt_headless.so
+[00:14:51.150] Output:
+    	linux-vdso.so.1 (0x0000757b2f783000)
+    	libawt.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so (0x0000757b2f67d000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x0000757b2f649000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x0000757b2f560000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000757b2f200000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000757b2f785000)
+    	libjvm.so => not found
+    	libjvm.so => not found
+[00:14:51.150] Returned: 0
+
+[00:14:51.150] Running ldd
+[00:14:51.157] Command [PID: 31863]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/server/libjsig.so
+[00:14:51.157] Output:
+    	linux-vdso.so.1 (0x0000749e4a0d5000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000749e49e00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000749e4a0d7000)
+[00:14:51.157] Returned: 0
+
+[00:14:51.157] Running ldd
+[00:14:51.163] Command [PID: 31870]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/server/libjvm.so
+[00:14:51.164] Output:
+    	linux-vdso.so.1 (0x00007c938bf2a000)
+    	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007c938a400000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007c938be29000)
+    	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007c938bdfb000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007c938a000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007c938bf2c000)
+[00:14:51.164] Returned: 0
+
+[00:14:51.164] Running ldd
+[00:14:51.170] Command [PID: 31877]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so
+[00:14:51.170] Output:
+    	linux-vdso.so.1 (0x00007bb35ec72000)
+    	libjvm.so => not found
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007bb35ea00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007bb35ec74000)
+[00:14:51.170] Returned: 0
+
+[00:14:51.170] Running ldd
+[00:14:51.176] Command [PID: 31884]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libawt.so
+[00:14:51.176] Output:
+    	linux-vdso.so.1 (0x00007fb5c5013000)
+    	libjvm.so => not found
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007fb5c4ee4000)
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fb5c4dfb000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fb5c4a00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007fb5c5015000)
+    	libjvm.so => not found
+[00:14:51.176] Returned: 0
+
+[00:14:51.176] Running ldd
+[00:14:51.182] Command [PID: 31891]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libmlib_image.so
+[00:14:51.182] Output:
+    	linux-vdso.so.1 (0x00007f6a0341e000)
+    	libjava.so => /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/lib/runtime/lib/libjava.so (0x00007f6a03361000)
+    	libjvm.so => not found
+    	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f6a03268000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f6a03000000)
+    	/lib64/ld-linux-x86-64.so.2 (0x00007f6a03420000)
+    	libjvm.so => not found
+[00:14:51.182] Returned: 0
+
+[00:14:51.183] Running ldd
+[00:14:51.188] Command [PID: 31898]:
+    ldd /tmp/jdk.jpackage11827914295784946882/images/opt/packinglist/bin/PackingList
+[00:14:51.188] Output:
+    	linux-vdso.so.1 (0x0000736dcb0cb000)
+    	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000736dcae00000)
+    	/lib64/ld-linux-x86-64.so.2 (0x0000736dcb0cd000)
+[00:14:51.189] Returned: 0
+
+[00:14:51.190] Running dpkg
+[00:14:51.322] Command [PID: 31905]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libbrotlidec.so.1.1.0
+[00:14:51.322] Output:
+    libbrotli1:amd64: /usr/lib/x86_64-linux-gnu/libbrotlidec.so.1.1.0
+[00:14:51.322] Returned: 0
+
+[00:14:51.324] /lib/x86_64-linux-gnu/libbrotlidec.so.1 is provided by [libbrotli1]
+[00:14:51.324] Running dpkg
+[00:14:51.463] Command [PID: 31906]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2
+[00:14:51.463] Output:
+    libpcre2-8-0:amd64: /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2
+[00:14:51.464] Returned: 0
+
+[00:14:51.464] /lib/x86_64-linux-gnu/libpcre2-8.so.0 is provided by [libpcre2-8-0]
+[00:14:51.464] Running dpkg
+[00:14:51.586] Command [PID: 31907]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libmd.so.0.1.0
+[00:14:51.587] Output:
+    libmd0:amd64: /usr/lib/x86_64-linux-gnu/libmd.so.0.1.0
+[00:14:51.587] Returned: 0
+
+[00:14:51.587] /lib/x86_64-linux-gnu/libmd.so.0 is provided by [libmd0]
+[00:14:51.587] Running dpkg
+[00:14:51.712] Command [PID: 31908]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libz.so.1.3
+[00:14:51.712] Output:
+    zlib1g:amd64: /usr/lib/x86_64-linux-gnu/libz.so.1.3
+[00:14:51.712] Returned: 0
+
+[00:14:51.713] /lib/x86_64-linux-gnu/libz.so.1 is provided by [zlib1g]
+[00:14:51.713] Running dpkg
+[00:14:51.833] Command [PID: 31909]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0
+[00:14:51.833] Output:
+    libxtst6:amd64: /usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0
+[00:14:51.833] Returned: 0
+
+[00:14:51.834] /lib/x86_64-linux-gnu/libXtst.so.6 is provided by [libxtst6]
+[00:14:51.834] Running dpkg
+[00:14:51.964] Command [PID: 31910]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+[00:14:51.964] Output:
+    libgcc-s1:amd64: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+[00:14:51.964] Returned: 0
+
+[00:14:51.965] /lib/x86_64-linux-gnu/libgcc_s.so.1 is provided by [libgcc-s1]
+[00:14:51.965] Running dpkg
+[00:14:52.094] Command [PID: 31911]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libbz2.so.1.0.4
+[00:14:52.094] Output:
+    libbz2-1.0:amd64: /usr/lib/x86_64-linux-gnu/libbz2.so.1.0.4
+[00:14:52.095] Returned: 0
+
+[00:14:52.096] /lib/x86_64-linux-gnu/libbz2.so.1.0 is provided by [libbz2-1.0]
+[00:14:52.096] Running dpkg
+[00:14:52.253] Command [PID: 31922]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+[00:14:52.253] Output:
+    libxext6:amd64: /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+[00:14:52.253] Returned: 0
+
+[00:14:52.253] /lib/x86_64-linux-gnu/libXext.so.6 is provided by [libxext6]
+[00:14:52.254] Running dpkg
+[00:14:52.380] Command [PID: 31923]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libjpeg.so.8.2.2
+[00:14:52.381] Output:
+    libjpeg-turbo8:amd64: /usr/lib/x86_64-linux-gnu/libjpeg.so.8.2.2
+[00:14:52.381] Returned: 0
+
+[00:14:52.381] /lib/x86_64-linux-gnu/libjpeg.so.8 is provided by [libjpeg-turbo8]
+[00:14:52.381] Running dpkg
+[00:14:52.504] Command [PID: 31924]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libc.so.6
+[00:14:52.504] Output:
+    libc6:amd64: /usr/lib/x86_64-linux-gnu/libc.so.6
+[00:14:52.505] Returned: 0
+
+[00:14:52.505] /lib/x86_64-linux-gnu/libc.so.6 is provided by [libc6]
+[00:14:52.505] Running dpkg
+[00:14:52.631] Command [PID: 31925]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libbsd.so.0.12.1
+[00:14:52.631] Output:
+    libbsd0:amd64: /usr/lib/x86_64-linux-gnu/libbsd.so.0.12.1
+[00:14:52.631] Returned: 0
+
+[00:14:52.632] /lib/x86_64-linux-gnu/libbsd.so.0 is provided by [libbsd0]
+[00:14:52.632] Running dpkg
+[00:14:52.753] Command [PID: 31926]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libasound.so.2.0.0
+[00:14:52.753] Output:
+    libasound2t64:amd64: /usr/lib/x86_64-linux-gnu/libasound.so.2.0.0
+[00:14:52.753] Returned: 0
+
+[00:14:52.754] /lib/x86_64-linux-gnu/libasound.so.2 is provided by [libasound2t64]
+[00:14:52.754] Running dpkg
+[00:14:52.879] Command [PID: 31927]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXi.so.6.1.0
+[00:14:52.880] Output:
+    libxi6:amd64: /usr/lib/x86_64-linux-gnu/libXi.so.6.1.0
+[00:14:52.880] Returned: 0
+
+[00:14:52.880] /lib/x86_64-linux-gnu/libXi.so.6 is provided by [libxi6]
+[00:14:52.880] Running dpkg
+[00:14:53.003] Command [PID: 31928]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libharfbuzz.so.0.60830.0
+[00:14:53.004] Output:
+    libharfbuzz0b:amd64: /usr/lib/x86_64-linux-gnu/libharfbuzz.so.0.60830.0
+[00:14:53.004] Returned: 0
+
+[00:14:53.005] /lib/x86_64-linux-gnu/libharfbuzz.so.0 is provided by [libharfbuzz0b]
+[00:14:53.005] Running dpkg
+[00:14:53.137] Command [PID: 31929]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libfreetype.so.6.20.1
+[00:14:53.137] Output:
+    libfreetype6:amd64: /usr/lib/x86_64-linux-gnu/libfreetype.so.6.20.1
+[00:14:53.137] Returned: 0
+
+[00:14:53.137] /lib/x86_64-linux-gnu/libfreetype.so.6 is provided by [libfreetype6]
+[00:14:53.138] Running dpkg
+[00:14:53.275] Command [PID: 31935]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+[00:14:53.275] Output:
+    libx11-6:amd64: /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+[00:14:53.275] Returned: 0
+
+[00:14:53.276] /lib/x86_64-linux-gnu/libX11.so.6 is provided by [libx11-6]
+[00:14:53.276] Running dpkg
+[00:14:53.412] Command [PID: 31936]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libm.so.6
+[00:14:53.413] Output:
+    libc6:amd64: /usr/lib/x86_64-linux-gnu/libm.so.6
+[00:14:53.413] Returned: 0
+
+[00:14:53.413] /lib/x86_64-linux-gnu/libm.so.6 is provided by [libc6]
+[00:14:53.413] Running dpkg
+[00:14:53.550] Command [PID: 31944]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libpcsclite.so.1.0.0
+[00:14:53.550] Output:
+    libpcsclite1:amd64: /usr/lib/x86_64-linux-gnu/libpcsclite.so.1.0.0
+[00:14:53.550] Returned: 0
+
+[00:14:53.550] /lib/x86_64-linux-gnu/libpcsclite.so.1 is provided by [libpcsclite1]
+[00:14:53.550] Running dpkg
+[00:14:53.678] Command [PID: 32084]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.8000.0
+[00:14:53.678] Output:
+    libglib2.0-0t64:amd64: /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.8000.0
+[00:14:53.678] Returned: 0
+
+[00:14:53.678] /lib/x86_64-linux-gnu/libglib-2.0.so.0 is provided by [libglib2.0-0t64]
+[00:14:53.678] Running dpkg
+[00:14:53.808] Command [PID: 32096]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+[00:14:53.808] Output:
+    libxcb1:amd64: /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+[00:14:53.808] Returned: 0
+
+[00:14:53.809] /lib/x86_64-linux-gnu/libxcb.so.1 is provided by [libxcb1]
+[00:14:53.809] Running dpkg
+[00:14:53.940] Command [PID: 32097]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+[00:14:53.940] Output:
+    libxrender1:amd64: /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+[00:14:53.940] Returned: 0
+
+[00:14:53.941] /lib/x86_64-linux-gnu/libXrender.so.1 is provided by [libxrender1]
+[00:14:53.941] Running dpkg
+[00:14:54.061] Command [PID: 32098]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libgif.so.7.2.0
+[00:14:54.061] Output:
+    libgif7:amd64: /usr/lib/x86_64-linux-gnu/libgif.so.7.2.0
+[00:14:54.061] Returned: 0
+
+[00:14:54.061] /lib/x86_64-linux-gnu/libgif.so.7 is provided by [libgif7]
+[00:14:54.062] Running dpkg
+[00:14:54.184] Command [PID: 32099]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/liblcms2.so.2.0.14
+[00:14:54.184] Output:
+    liblcms2-2:amd64: /usr/lib/x86_64-linux-gnu/liblcms2.so.2.0.14
+[00:14:54.185] Returned: 0
+
+[00:14:54.185] /lib/x86_64-linux-gnu/liblcms2.so.2 is provided by [liblcms2-2]
+[00:14:54.185] Running dpkg
+[00:14:54.305] Command [PID: 32100]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libgraphite2.so.3.2.1
+[00:14:54.305] Output:
+    libgraphite2-3:amd64: /usr/lib/x86_64-linux-gnu/libgraphite2.so.3.2.1
+[00:14:54.305] Returned: 0
+
+[00:14:54.306] /lib/x86_64-linux-gnu/libgraphite2.so.3 is provided by [libgraphite2-3]
+[00:14:54.306] Running dpkg
+[00:14:54.431] Command [PID: 32101]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+[00:14:54.431] Output:
+    libxdmcp6:amd64: /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+[00:14:54.431] Returned: 0
+
+[00:14:54.431] /lib/x86_64-linux-gnu/libXdmcp.so.6 is provided by [libxdmcp6]
+[00:14:54.432] Running dpkg
+[00:14:54.557] Command [PID: 32102]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+[00:14:54.558] Output:
+    libxau6:amd64: /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+[00:14:54.558] Returned: 0
+
+[00:14:54.558] /lib/x86_64-linux-gnu/libXau.so.6 is provided by [libxau6]
+[00:14:54.558] Running dpkg
+[00:14:54.726] Command [PID: 32105]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1.1.0
+[00:14:54.726] Output:
+    libbrotli1:amd64: /usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1.1.0
+[00:14:54.726] Returned: 0
+
+[00:14:54.726] /lib/x86_64-linux-gnu/libbrotlicommon.so.1 is provided by [libbrotli1]
+[00:14:54.726] Running dpkg
+[00:14:54.862] Command [PID: 32118]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+[00:14:54.862] Output:
+    libstdc++6:amd64: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+[00:14:54.862] Returned: 0
+
+[00:14:54.862] /lib/x86_64-linux-gnu/libstdc++.so.6 is provided by [libstdc++6]
+[00:14:54.862] Running dpkg
+[00:14:54.992] Command [PID: 32119]:
+    dpkg -S /usr/lib/x86_64-linux-gnu/libpng16.so.16.43.0
+[00:14:54.992] Output:
+    libpng16-16t64:amd64: /usr/lib/x86_64-linux-gnu/libpng16.so.16.43.0
+[00:14:54.992] Returned: 0
+
+[00:14:54.993] /lib/x86_64-linux-gnu/libpng16.so.16 is provided by [libpng16-16t64]
+[00:14:54.995] Required packages: [libasound2t64, libbrotli1, libbsd0, libbz2-1.0, libc6, libfreetype6, libgcc-s1, libgif7, libglib2.0-0t64, libgraphite2-3, libharfbuzz0b, libjpeg-turbo8, liblcms2-2, libmd0, libpcre2-8-0, libpcsclite1, libpng16-16t64, libstdc++6, libx11-6, libxau6, libxcb1, libxdmcp6, libxext6, libxi6, libxrender1, libxtst6, xdg-utils, zlib1g]
+[00:14:54.997] Using custom package resource [icon] (loaded from file /home/matias/Descargas/PackingListApp/src/main/resources/icon.png).
+[00:14:55.000] Using default package resource template.desktop [Menu shortcut descriptor] (add PackingList.desktop to the resource-dir to customize).
+[00:14:55.041] Using default package resource template.control [DEB control file] (add control to the resource-dir to customize).
+[00:14:55.047] Using default package resource template.preinst [DEB preinstall script] (add preinst to the resource-dir to customize).
+[00:14:55.052] Using default package resource template.prerm [DEB prerm script] (add prerm to the resource-dir to customize).
+[00:14:55.055] Using default package resource template.postinst [DEB postinstall script] (add postinst to the resource-dir to customize).
+[00:14:55.058] Using default package resource template.postrm [DEB postrm script] (add postrm to the resource-dir to customize).
+[00:14:55.060] Using default package resource template.copyright [Copyright file] (add copyright to the resource-dir to customize).
+[00:14:55.082] Generating DEB for installer to: /home/matias/Descargas/PackingListApp/installer/packinglist_2.0.0_amd64.deb.
+[00:14:55.085] Running fakeroot
+[00:15:13.696] Command [PID: 32121]:
+    fakeroot dpkg-deb --verbose -b /tmp/jdk.jpackage11827914295784946882/images /home/matias/Descargas/PackingListApp/installer/packinglist_2.0.0_amd64.deb
+[00:15:13.696] Output:
+    dpkg-deb: construyendo el paquete `packinglist' en `/home/matias/Descargas/PackingListApp/installer/packinglist_2.0.0_amd64.deb'.
+[00:15:13.696] Returned: 0
+
+[00:15:13.697] Package (.deb) saved to: /home/matias/Descargas/PackingListApp/installer/packinglist_2.0.0_amd64.deb.
+[00:15:13.698] Running dpkg-deb
+[00:15:13.703] Command [PID: 32302]:
+    dpkg-deb -f installer/packinglist_2.0.0_amd64.deb Package Version Architecture
+[00:15:13.703] Output:
+    Package: packinglist
+    Version: 2.0.0
+    Architecture: amd64
+[00:15:13.703] Returned: 0
+
+[00:15:13.705] Succeeded in building DEB Bundle package

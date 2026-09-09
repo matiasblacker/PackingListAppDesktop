@@ -1,0 +1,214 @@
+/* styles.css — Packing List App */
+
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f8f9fa;
+}
+
+/* Tabla */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #dce3ea;
+    -fx-border-width: 1;
+    -fx-font-size: 11px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1E508C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 6;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f4f7fb;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: white;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #cde0f5;
+}
+
+.table-view .table-cell {
+    -fx-padding: 5 8;
+    -fx-border-color: transparent #e8eef4 transparent transparent;
+}
+
+/* Entradas de texto generales (TextField, PasswordField, TextArea) */
+.text-field, .password-field, .text-area {
+    -fx-background-color: white;
+    -fx-text-fill: #1a202c;
+    -fx-prompt-text-fill: #718096;
+    -fx-border-color: #cbd5e0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6 10;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-border-color: #3182ce;
+}
+
+/* Inputs en cabeceras o contenedores oscuros */
+.dark-header .text-field,
+.dark-header .password-field {
+    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.55);
+    -fx-border-color: rgba(255,255,255,0.35);
+}
+
+.dark-header .text-field:focused,
+.dark-header .password-field:focused {
+    -fx-border-color: rgba(255,255,255,0.8);
+}
+
+.button:hover {
+    -fx-opacity: 0.85;
+}
+
+/* Custom icon-only button styles */
+.btn-cancelar {
+    -fx-background-color: #dc3545 !important;
+    -fx-text-fill: white !important;
+    -fx-content-display: graphic-only !important;
+    -fx-cursor: hand;
+}
+.btn-cancelar .glyph-icon {
+    -fx-fill: white !important;
+}
+
+.btn-guardar {
+    -fx-background-color: #28a745 !important;
+    -fx-text-fill: white !important;
+    -fx-content-display: graphic-only !important;
+    -fx-cursor: hand;
+}
+.btn-guardar .glyph-icon {
+    -fx-fill: white !important;
+}
+
+.btn-limpiar {
+    -fx-background-color: #6c757d !important;
+    -fx-text-fill: white !important;
+    -fx-content-display: graphic-only !important;
+    -fx-cursor: hand;
+}
+.btn-limpiar .glyph-icon {
+    -fx-fill: white !important;
+}
+
+/* Scroll bars */
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #b0bec5;
+    -fx-background-radius: 4;
+}
+
+/* Estilos de Dialogos para inputs legibles y compactos */
+.dialog-root .text-field, 
+.dialog-root .combo-box,
+.dialog-root .date-picker {
+    -fx-background-color: white;
+    -fx-text-fill: #2d3748;
+    -fx-prompt-text-fill: #a0aec0;
+    -fx-border-color: #cbd5e0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4 6;
+    -fx-font-size: 11px;
+}
+
+.dialog-root .combo-box .list-cell {
+    -fx-text-fill: #2d3748;
+}
+
+.dialog-root .text-field:focused,
+.dialog-root .combo-box:focused,
+.dialog-root .date-picker:focused {
+    -fx-border-color: #4299e1;
+}
+
+.dialog-root .label {
+    -fx-text-fill: #4a5568;
+    -fx-font-size: 11px;
+}
+
+.dialog-root .button {
+    -fx-font-size: 11px;
+    -fx-padding: 6 12;
+}
+
+/* Custom TabPane for Pallets Detail & Resumen */
+.pallet-tab-pane {
+    -fx-background-color: white;
+}
+.pallet-tab-pane .tab-header-area {
+    -fx-background-color: white;
+    -fx-padding: 0 0 0 0;
+}
+.pallet-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: white;
+}
+.pallet-tab-pane .tab {
+    -fx-background-color: #f7fafc;
+    -fx-background-insets: 0 1 0 1;
+    -fx-background-radius: 4 4 0 0;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 1 0 1;
+    -fx-border-radius: 4 4 0 0;
+}
+.pallet-tab-pane .tab:selected {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e0 #cbd5e0 white #cbd5e0;
+    -fx-background-insets: 0 1 -1 1;
+}
+.pallet-tab-pane .tab-content-area {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 0 4 4;
+    -fx-padding: 0;
+}
+
+/* Dashboard WMS Styling */
+.dashboard-card {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+}
+
+.dashboard-kpi-card {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 14 18;
+}
+
+.dashboard-action-card {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 14 16;
+    -fx-cursor: hand;
+}
+
+.dashboard-action-card:hover {
+    -fx-background-color: #f0f7ff;
+    -fx-border-color: #3182ce;
+}
+
+
