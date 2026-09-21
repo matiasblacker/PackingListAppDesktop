@@ -90,8 +90,7 @@ public class BodegasDialog extends Stage {
             filteredDeposits.setPredicate(d -> {
                 if (newVal == null || newVal.isEmpty()) return true;
                 String lower = newVal.toLowerCase();
-                return (d.getNombre() != null && d.getNombre().toLowerCase().contains(lower))
-                        || (d.getCodigo() != null && d.getCodigo().toLowerCase().contains(lower));
+                return (d.getNombre() != null && d.getNombre().toLowerCase().contains(lower));
             });
         });
 
@@ -100,12 +99,10 @@ public class BodegasDialog extends Stage {
         tablaDepositos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tablaDepositos.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
-        TableColumn<DepositModel, String> colDepCodigo = new TableColumn<>("Código");
-        colDepCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
         TableColumn<DepositModel, String> colDepNombre = new TableColumn<>("Depósito");
         colDepNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
         
-        tablaDepositos.getColumns().addAll(colDepCodigo, colDepNombre);
+        tablaDepositos.getColumns().addAll(colDepNombre);
         VBox.setVgrow(tablaDepositos, Priority.ALWAYS);
 
         tablaDepositos.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
@@ -179,15 +176,15 @@ public class BodegasDialog extends Stage {
 
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre de la Bodega");
-        txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         
         txtCodigo = new TextField();
         txtCodigo.setPromptText("Código (e.g. BOD-01)");
-        txtCodigo.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtCodigo.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         
         txtDireccion = new TextField();
         txtDireccion.setPromptText("Dirección (Opcional)");
-        txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
 
         grid.add(crearLabel("Código:"), 0, 0); grid.add(txtCodigo, 0, 1);
         grid.add(crearLabel("Nombre:"), 0, 2); grid.add(txtNombre, 0, 3);
@@ -357,7 +354,7 @@ public class BodegasDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
         return lbl;
     }
 }

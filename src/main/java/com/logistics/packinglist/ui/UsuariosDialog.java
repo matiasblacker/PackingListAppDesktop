@@ -1,6 +1,7 @@
 package com.logistics.packinglist.ui;
 
 import com.logistics.packinglist.model.CompanyModel;
+import com.logistics.packinglist.model.DepositModel;
 import com.logistics.packinglist.model.UserModel;
 import com.logistics.packinglist.model.WarehouseModel;
 import com.logistics.packinglist.service.AuthService;
@@ -50,6 +51,7 @@ public class UsuariosDialog extends Stage {
     private ComboBox<String> cmbRol;
     private ComboBox<String> cmbEstado;
     private ComboBox<CompanyModel> cmbEmpresa;
+    private ComboBox<DepositModel> cmbDeposito;
     private ComboBox<WarehouseModel> cmbBodega;
 
     private Label lblPassword;
@@ -207,15 +209,31 @@ public class UsuariosDialog extends Stage {
         cmbEmpresa.setMaxWidth(Double.MAX_VALUE);
         lblEmpresa = crearLabel("Empresa:");
 
+        cmbDeposito = new ComboBox<>();
+        cmbDeposito.setPromptText("Seleccione Depósito...");
+        cmbDeposito.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-font-size: 11px;");
+        cmbDeposito.setMaxWidth(Double.MAX_VALUE);
+
         cmbBodega = new ComboBox<>(filteredWarehouses);
         cmbBodega.setPromptText("Seleccione Bodega...");
         cmbBodega.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
         cmbBodega.setMaxWidth(Double.MAX_VALUE);
 
-        // Comportamiento de filtrado dinámico de bodegas al seleccionar empresa
         cmbEmpresa.valueProperty().addListener((obs, oldVal, newVal) -> {
+            cmbDeposito.setValue(null);
+            cmbDeposito.getItems().clear();
             cmbBodega.setValue(null);
-            filtrarBodegas();
+            if (newVal != null) {
+                cargarDepositosPorEmpresa(newVal.getId());
+            }
+        });
+
+        cmbDeposito.valueProperty().addListener((obs, oldVal, newVal) -> {
+            cmbBodega.setValue(null);
+            filteredWarehouses.clear();
+            if (newVal != null) {
+                cargarBodegasPorDeposito(newVal.getId());
+            }
         });
 
         // Posicionar controles en el formulario
@@ -231,16 +249,26 @@ public class UsuariosDialog extends Stage {
 
         grid.add(crearLabel("Rol:"), 0, 2);
         grid.add(cmbRol, 1, 2);
-        grid.add(crearLabel("Bodega:"), 2, 2);
-        grid.add(cmbBodega, 3, 2);
 
         int rowOffset = 3;
         if (isAdminSis) {
             grid.add(lblEmpresa, 0, rowOffset);
             grid.add(cmbEmpresa, 1, rowOffset);
+            grid.add(crearLabel("Depósito:"), 2, rowOffset);
+            grid.add(cmbDeposito, 3, rowOffset);
+            
+            rowOffset++;
+            grid.add(crearLabel("Bodega:"), 0, rowOffset);
+            grid.add(cmbBodega, 1, rowOffset);
             grid.add(lblEstado, 2, rowOffset);
             grid.add(cmbEstado, 3, rowOffset);
         } else {
+            grid.add(crearLabel("Depósito:"), 0, rowOffset);
+            grid.add(cmbDeposito, 1, rowOffset);
+            grid.add(crearLabel("Bodega:"), 2, rowOffset);
+            grid.add(cmbBodega, 3, rowOffset);
+            
+            rowOffset++;
             grid.add(lblEstado, 0, rowOffset);
             grid.add(cmbEstado, 1, rowOffset);
         }
@@ -303,11 +331,27 @@ public class UsuariosDialog extends Stage {
 
                 // Esperar a que se filtren las bodegas y seleccionar la correcta
                 javafx.application.Platform.runLater(() -> {
-                    WarehouseModel targetWarehouse = filteredWarehouses.stream()
+                    WarehouseModel targetWarehouse = allWarehouses.stream()
                             .filter(w -> w.getId().equals(newSel.getWarehouseId()))
                             .findFirst()
                             .orElse(null);
-                    cmbBodega.setValue(targetWarehouse);
+
+                    if (targetWarehouse != null && targetWarehouse.getDepositId() != null) {
+                        DepositModel depTarget = cmbDeposito.getItems().stream()
+                            .filter(d -> d.getId().equals(targetWarehouse.getDepositId()))
+                            .findFirst().orElse(null);
+                        if (depTarget != null) {
+                            cmbDeposito.setValue(depTarget);
+                        }
+                    }
+
+                    javafx.application.Platform.runLater(() -> {
+                        WarehouseModel filteredTarget = filteredWarehouses.stream()
+                                .filter(w -> w.getId().equals(newSel.getWarehouseId()))
+                                .findFirst()
+                                .orElse(null);
+                        cmbBodega.setValue(filteredTarget);
+                    });
                 });
             }
         });
@@ -383,26 +427,33 @@ public class UsuariosDialog extends Stage {
         }).start();
     }
 
-    private void filtrarBodegas() {
-        String filterCompanyId;
-        if (isAdminSis) {
-            CompanyModel comp = cmbEmpresa.getValue();
-            if (comp == null) {
-                filteredWarehouses.clear();
-                return;
+    private void cargarDepositosPorEmpresa(String companyId) {
+        new Thread(() -> {
+            try {
+                List<DepositModel> depositos = service.obtenerDepositos().stream()
+                        .filter(d -> companyId.equals(d.getCompanyId()))
+                        .toList();
+                javafx.application.Platform.runLater(() -> cmbDeposito.getItems().setAll(depositos));
+            } catch (Exception e) {
+                javafx.application.Platform.runLater(() -> System.err.println("Error cargando depósitos: " + e.getMessage()));
             }
-            filterCompanyId = comp.getId();
-        } else {
-            filterCompanyId = AuthService.getInstance().getCompanyId();
-        }
+        }).start();
+    }
 
-        List<WarehouseModel> matched;
-        synchronized (allWarehouses) {
-            matched = allWarehouses.stream()
-                    .filter(w -> filterCompanyId == null || filterCompanyId.equals(w.getCompanyId()))
-                    .toList();
-        }
-        filteredWarehouses.setAll(matched);
+    private void cargarBodegasPorDeposito(String depositId) {
+        new Thread(() -> {
+            try {
+                List<WarehouseModel> bodegas = service.obtenerBodegasPorDeposito(depositId);
+                javafx.application.Platform.runLater(() -> filteredWarehouses.setAll(bodegas));
+            } catch (Exception e) {
+                javafx.application.Platform.runLater(() -> System.err.println("Error cargando bodegas: " + e.getMessage()));
+            }
+        }).start();
+    }
+
+    private void filtrarBodegas() {
+        // Ahora el filtro se hace via API en cargarBodegasPorDeposito
+        filteredWarehouses.clear();
     }
 
     private String getNombreEmpresa(String companyId) {
@@ -519,6 +570,8 @@ public class UsuariosDialog extends Stage {
         cmbRol.setValue(null);
         cmbEstado.setValue("ACTIVO");
         cmbEmpresa.setValue(null);
+        cmbDeposito.setValue(null);
+        cmbDeposito.getItems().clear();
         cmbBodega.setValue(null);
         filtrarBodegas();
     }

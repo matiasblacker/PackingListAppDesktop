@@ -36,7 +36,10 @@ public class DepositosDialog extends Stage {
     private TextField txtBusquedaDepositos;
 
     // Campos de formulario
-    private TextField txtCodigo, txtNombre, txtDireccion, txtRegion, txtComuna;
+    private TextField txtNombre, txtDireccion, txtRegion, txtComuna;
+    private CheckBox chkUsarDireccionEmpresa;
+    private VBox formContainer;
+    private Label lblSeleccionEmpresa;
 
     private Button btnAdd, btnDelete, btnClear;
 
@@ -45,7 +48,7 @@ public class DepositosDialog extends Stage {
 
     public DepositosDialog(javafx.stage.Window owner) {
         initOwner(owner);
-        this.isAdminSis = "ADMINSIS".equals(com.logistics.packinglist.service.AuthService.getInstance().getRole());
+        this.isAdminSis = "ADMINSIS".equalsIgnoreCase(com.logistics.packinglist.service.AuthService.getInstance().getRole());
 
         companiesList = FXCollections.observableArrayList();
         filteredCompanies = new FilteredList<>(companiesList, p -> true);
@@ -85,7 +88,7 @@ public class DepositosDialog extends Stage {
 
             txtBusquedaEmpresas = new TextField();
             txtBusquedaEmpresas.setPromptText("Buscar Empresa...");
-            txtBusquedaEmpresas.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+            txtBusquedaEmpresas.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
             txtBusquedaEmpresas.textProperty().addListener((obs, old, newVal) -> {
                 filteredCompanies.setPredicate(c -> {
                     if (newVal == null || newVal.isEmpty()) return true;
@@ -112,6 +115,7 @@ public class DepositosDialog extends Stage {
                 selectedCompany = newSel;
                 selectedDeposit = null;
                 limpiarFormulario();
+                actualizarEstadoFormulario();
                 
                 if (newSel != null) {
                     filteredDeposits.setPredicate(d -> newSel.getId().equals(d.getCompanyId()));
@@ -133,14 +137,13 @@ public class DepositosDialog extends Stage {
 
         txtBusquedaDepositos = new TextField();
         txtBusquedaDepositos.setPromptText("Buscar Depósito...");
-        txtBusquedaDepositos.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtBusquedaDepositos.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         txtBusquedaDepositos.textProperty().addListener((obs, old, newVal) -> {
             filteredDeposits.setPredicate(d -> {
                 if (isAdminSis && (selectedCompany == null || !selectedCompany.getId().equals(d.getCompanyId()))) return false;
                 if (newVal == null || newVal.isEmpty()) return true;
                 String lower = newVal.toLowerCase();
-                return (d.getNombre() != null && d.getNombre().toLowerCase().contains(lower))
-                        || (d.getCodigo() != null && d.getCodigo().toLowerCase().contains(lower));
+                return (d.getNombre() != null && d.getNombre().toLowerCase().contains(lower));
             });
         });
 
@@ -149,19 +152,23 @@ public class DepositosDialog extends Stage {
         tablaDepositos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tablaDepositos.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
-        TableColumn<DepositModel, String> colDepCodigo = new TableColumn<>("Código");
-        colDepCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
-        TableColumn<DepositModel, String> colDepNombre = new TableColumn<>("Depósito");
+        TableColumn<DepositModel, String> colDepNombre = new TableColumn<>("Nombre");
         colDepNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
+        TableColumn<DepositModel, String> colDepDir = new TableColumn<>("Dirección");
+        colDepDir.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDireccion()));
+        TableColumn<DepositModel, String> colDepReg = new TableColumn<>("Región");
+        colDepReg.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getRegion()));
+        TableColumn<DepositModel, String> colDepCom = new TableColumn<>("Comuna");
+        colDepCom.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getComuna()));
         
-        tablaDepositos.getColumns().addAll(colDepCodigo, colDepNombre);
+        tablaDepositos.getColumns().addAll(colDepNombre, colDepDir, colDepReg, colDepCom);
         VBox.setVgrow(tablaDepositos, Priority.ALWAYS);
 
         tablaDepositos.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
                 selectedDeposit = newSel;
-                txtCodigo.setText(newSel.getCodigo());
                 txtNombre.setText(newSel.getNombre());
+                chkUsarDireccionEmpresa.setSelected(false);
                 txtDireccion.setText(newSel.getDireccion() != null ? newSel.getDireccion() : "");
                 txtRegion.setText(newSel.getRegion() != null ? newSel.getRegion() : "");
                 txtComuna.setText(newSel.getComuna() != null ? newSel.getComuna() : "");
@@ -178,31 +185,57 @@ public class DepositosDialog extends Stage {
         Label lblFormTitle = new Label("Registro de Depósito");
         lblFormTitle.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
         
+        lblSeleccionEmpresa = new Label("← Seleccione una empresa");
+        lblSeleccionEmpresa.setStyle("-fx-font-size: 12px; -fx-text-fill: #ef4444; -fx-font-weight: bold;");
+        lblSeleccionEmpresa.setManaged(false);
+        lblSeleccionEmpresa.setVisible(false);
+
+        formContainer = new VBox(12);
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
-        grid.setVgap(15);
+        grid.setVgap(10); // reduced slightly
         grid.setPadding(new Insets(10, 0, 10, 0));
 
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre del Depósito");
-        txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         
-        txtCodigo = new TextField();
-        txtCodigo.setPromptText("Código (e.g. DEP-01)");
-        txtCodigo.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        chkUsarDireccionEmpresa = new CheckBox("Usar dirección de empresa");
+        chkUsarDireccionEmpresa.setStyle("-fx-font-size: 11px; -fx-text-fill: #334155;");
+        chkUsarDireccionEmpresa.setOnAction(e -> {
+            if (chkUsarDireccionEmpresa.isSelected()) {
+                txtDireccion.setDisable(true);
+                txtRegion.setDisable(true);
+                txtComuna.setDisable(true);
+                if (selectedCompany != null) {
+                    txtDireccion.setText(selectedCompany.getDireccion() != null ? selectedCompany.getDireccion() : "");
+                    txtRegion.setText(selectedCompany.getRegion() != null ? selectedCompany.getRegion() : "");
+                    txtComuna.setText(selectedCompany.getComuna() != null ? selectedCompany.getComuna() : "");
+                }
+            } else {
+                txtDireccion.setDisable(false);
+                txtRegion.setDisable(false);
+                txtComuna.setDisable(false);
+                txtDireccion.clear();
+                txtRegion.clear();
+                txtComuna.clear();
+            }
+        });
         
         txtDireccion = new TextField();
-        txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         txtRegion = new TextField();
-        txtRegion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtRegion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         txtComuna = new TextField();
-        txtComuna.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtComuna.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
 
-        grid.add(crearLabel("Código:"), 0, 0); grid.add(txtCodigo, 0, 1);
-        grid.add(crearLabel("Nombre:"), 0, 2); grid.add(txtNombre, 0, 3);
-        grid.add(crearLabel("Dirección:"), 0, 4); grid.add(txtDireccion, 0, 5);
-        grid.add(crearLabel("Región:"), 0, 6); grid.add(txtRegion, 0, 7);
-        grid.add(crearLabel("Comuna:"), 0, 8); grid.add(txtComuna, 0, 9);
+        int row = 0;
+        grid.add(crearLabel("Nombre del Depósito:"), 0, row++); grid.add(txtNombre, 0, row++);
+        grid.add(chkUsarDireccionEmpresa, 0, row++);
+        grid.add(crearLabel("Dirección:"), 0, row++); grid.add(txtDireccion, 0, row++);
+        grid.add(crearLabel("Región:"), 0, row++); grid.add(txtRegion, 0, row++);
+        grid.add(crearLabel("Comuna:"), 0, row++); grid.add(txtComuna, 0, row++);
 
         ColumnConstraints colF = new ColumnConstraints();
         colF.setHgrow(Priority.ALWAYS);
@@ -227,7 +260,8 @@ public class DepositosDialog extends Stage {
         VBox actionBox = new VBox(8, btnAdd, btnClear, btnDelete);
         actionBox.setPadding(new Insets(15, 0, 0, 0));
 
-        formPane.getChildren().addAll(lblFormTitle, grid, actionBox);
+        formContainer.getChildren().addAll(grid, actionBox);
+        formPane.getChildren().addAll(lblFormTitle, lblSeleccionEmpresa, formContainer);
         mainSplit.getItems().add(formPane);
 
         if (isAdminSis) {
@@ -241,6 +275,20 @@ public class DepositosDialog extends Stage {
         Scene scene = new Scene(root, 1080, 680);
         setScene(scene);
         setTitle("Depósitos y Áreas");
+
+        actualizarEstadoFormulario();
+    }
+
+    private void actualizarEstadoFormulario() {
+        if (isAdminSis && selectedCompany == null) {
+            formContainer.setDisable(true);
+            lblSeleccionEmpresa.setManaged(true);
+            lblSeleccionEmpresa.setVisible(true);
+        } else {
+            formContainer.setDisable(false);
+            lblSeleccionEmpresa.setManaged(false);
+            lblSeleccionEmpresa.setVisible(false);
+        }
     }
 
     private void cargarDatos() {
@@ -275,19 +323,17 @@ public class DepositosDialog extends Stage {
             return;
         }
 
-        String codigo = txtCodigo.getText().trim();
         String nombre = txtNombre.getText().trim();
         String dir = txtDireccion.getText().trim();
         String reg = txtRegion.getText().trim();
         String com = txtComuna.getText().trim();
 
-        if (codigo.isEmpty() || nombre.isEmpty()) {
-            alerta("Datos requeridos", "Código y Nombre son campos obligatorios.");
+        if (nombre.isEmpty()) {
+            alerta("Datos requeridos", "El Nombre es un campo obligatorio.");
             return;
         }
 
         DepositModel model = selectedDeposit != null ? selectedDeposit : new DepositModel();
-        model.setCodigo(codigo);
         model.setNombre(nombre);
         model.setDireccion(dir);
         model.setRegion(reg);
@@ -344,8 +390,11 @@ public class DepositosDialog extends Stage {
     private void limpiarFormulario() {
         selectedDeposit = null;
         tablaDepositos.getSelectionModel().clearSelection();
-        txtCodigo.clear();
         txtNombre.clear();
+        chkUsarDireccionEmpresa.setSelected(false);
+        txtDireccion.setDisable(false);
+        txtRegion.setDisable(false);
+        txtComuna.setDisable(false);
         txtDireccion.clear();
         txtRegion.clear();
         txtComuna.clear();
@@ -369,7 +418,7 @@ public class DepositosDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
         return lbl;
     }
 }

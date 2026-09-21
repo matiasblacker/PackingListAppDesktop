@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class DepositModel {
     private String id;
     private String companyId;
+    private String companyNombre;
     private String nombre;
-    private String codigo;
     private String direccion;
     private String region;
     private String comuna;
@@ -22,6 +22,6 @@ public class DepositModel {
 
     @Override
     public String toString() {
-        return nombre != null ? nombre + " (" + codigo + ")" : "";
+        return nombre != null ? nombre : "";
     }
 }
