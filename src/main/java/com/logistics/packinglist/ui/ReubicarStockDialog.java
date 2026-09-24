@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 import java.util.List;
 
@@ -63,8 +64,12 @@ public class ReubicarStockDialog extends Stage {
         setTitle("Reubicar Stock - " + product.getSku());
         setResizable(false);
 
-        Scene scene = new Scene(crearContenido(), 450, 450);
+        Scene scene = new Scene(crearContenido(), 450, 430);
+        if (getClass().getResource("/styles.css") != null) {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 450, 430, 420, 380);
         
         setOnShown(e -> {
             if (txtCantidad != null) {
@@ -102,8 +107,8 @@ public class ReubicarStockDialog extends Stage {
         grid.setPadding(new Insets(10, 5, 10, 5));
 
         // Estilos de labels
-        String labelStyle = "-fx-font-weight: bold; -fx-text-fill: #495057;";
-        String valueStyle = "-fx-text-fill: #212529; -fx-font-family: monospace;";
+        String labelStyle = "-fx-font-weight: bold; -fx-text-fill: #475569; -fx-font-size: 9.5px;";
+        String valueStyle = "-fx-text-fill: #212529; -fx-font-family: monospace; -fx-font-size: 10px;";
 
         // Fila 1: Producto
         Label lblProdL = new Label("Producto:");
@@ -144,6 +149,7 @@ public class ReubicarStockDialog extends Stage {
         cbZona = new ComboBox<>();
         cbZona.setPromptText("Todas las zonas...");
         cbZona.setMaxWidth(Double.MAX_VALUE);
+        cbZona.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         configurarComboBoxSearchGeneric(cbZona, filteredZones);
         cbZona.valueProperty().addListener((obs, oldVal, newVal) -> {
             actualizarFiltroUbicaciones();
@@ -157,6 +163,7 @@ public class ReubicarStockDialog extends Stage {
         cbDestino = new ComboBox<>();
         cbDestino.setPromptText("Seleccione ubicación...");
         cbDestino.setMaxWidth(Double.MAX_VALUE);
+        cbDestino.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         configurarComboBoxSearchGeneric(cbDestino, filteredDestLocations);
         grid.add(lblDestL, 0, 5);
         grid.add(cbDestino, 1, 5);
@@ -166,6 +173,7 @@ public class ReubicarStockDialog extends Stage {
         lblCantL.setStyle(labelStyle);
         txtCantidad = new TextField();
         txtCantidad.setPromptText("Ej. " + currentMaxQuantity);
+        txtCantidad.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         grid.add(lblCantL, 0, 6);
         grid.add(txtCantidad, 1, 6);
 

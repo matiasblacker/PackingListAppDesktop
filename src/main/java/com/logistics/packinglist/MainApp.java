@@ -37,18 +37,19 @@ public class MainApp extends Application {
             mostrarMain(stage);
         });
         
-        Scene scene = new Scene(loginRoot, 400, 450);
+        Scene scene = new Scene(loginRoot, 400, 500);
+        ScreenUtil.applyResponsiveTheme(scene);
         stage.setScene(scene);
         stage.setWidth(400);
-        stage.setHeight(480);
+        stage.setHeight(520);
         stage.setMinWidth(400);
-        stage.setMinHeight(450);
+        stage.setMinHeight(500);
         stage.show();
         
         javafx.application.Platform.runLater(() -> {
             stage.setMaximized(false);
             stage.setWidth(400);
-            stage.setHeight(480);
+            stage.setHeight(520);
             ScreenUtil.centerOnActiveScreen(stage);
         });
     }
@@ -62,11 +63,7 @@ public class MainApp extends Application {
             mostrarLogin(stage);
         });
         Scene scene = new Scene(root, 950, 600);
-        try {
-            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        } catch (Exception e) {
-            System.err.println("Could not load stylesheet: " + e.getMessage());
-        }
+        ScreenUtil.applyResponsiveTheme(scene);
         
         stage.setScene(scene);
         stage.setMinWidth(800);

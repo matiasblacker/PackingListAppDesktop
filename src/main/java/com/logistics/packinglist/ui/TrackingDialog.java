@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -89,8 +90,8 @@ public class TrackingDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Módulo de Tracking y Seguimiento de Envíos (Operaciones WH)");
 
-        setMinWidth(1280);
-        setMinHeight(780);
+        setMinWidth(950);
+        setMinHeight(540);
 
         construirUI();
         cargarDatos();
@@ -118,7 +119,7 @@ public class TrackingDialog extends Stage {
 
         txtSearch = new TextField();
         txtSearch.setPromptText("Buscar por tracking N°, folio, cliente o estado...");
-        txtSearch.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtSearch.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
             String q = newVal == null ? "" : newVal.trim().toLowerCase();
             filteredList.setPredicate(note -> {
@@ -211,26 +212,26 @@ public class TrackingDialog extends Stage {
         infoGrid.setStyle("-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-radius: 6; -fx-background-radius: 6;");
 
         lblFolio = new Label("-");
-        lblFolio.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblFolio.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
         lblTrackingNum = new Label("-");
-        lblTrackingNum.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #2b6cb0;");
+        lblTrackingNum.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #2b6cb0;");
         lblCliente = new Label("-");
-        lblCliente.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblCliente.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
         lblEstadoNP = new Label("-");
-        lblEstadoNP.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4a5568;");
+        lblEstadoNP.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #4a5568;");
         lblEstadoTracking = new Label("-");
-        lblEstadoTracking.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #2f855a;");
+        lblEstadoTracking.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #2f855a;");
 
         Label lblFNP = new Label("Folio NP:");
-        lblFNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblFNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblTRK = new Label("Tracking N°:");
-        lblTRK.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblTRK.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblCLI = new Label("Cliente:");
-        lblCLI.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblCLI.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblENP = new Label("Estado NP:");
-        lblENP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblENP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblETRK = new Label("Estado Tracking:");
-        lblETRK.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblETRK.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         infoGrid.add(lblFNP, 0, 0);
         infoGrid.add(lblFolio, 1, 0);
@@ -251,7 +252,7 @@ public class TrackingDialog extends Stage {
         txtLinkPublico = new TextField();
         txtLinkPublico.setEditable(false);
         txtLinkPublico.setPromptText("Seleccione un envío para ver su URL pública...");
-        txtLinkPublico.setStyle("-fx-background-color: #f1f5f9; -fx-text-fill: #1e40af; -fx-border-color: #cbd5e1; -fx-border-radius: 6; -fx-font-size: 11px;");
+        txtLinkPublico.setStyle("-fx-background-color: #f1f5f9; -fx-text-fill: #1e40af; -fx-border-color: #cbd5e1; -fx-border-radius: 4; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         HBox.setHgrow(txtLinkPublico, Priority.ALWAYS);
 
         FontAwesomeIconView iconCopy = new FontAwesomeIconView(FontAwesomeIcon.COPY);
@@ -269,7 +270,7 @@ public class TrackingDialog extends Stage {
             }
         });
         Label lblURL = new Label("URL Pública:");
-        lblURL.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblURL.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         linkBox.getChildren().addAll(lblURL, txtLinkPublico, btnCopyLink);
 
         // --- Tema 5: Historial Cronológico de Estados ---
@@ -327,7 +328,7 @@ public class TrackingDialog extends Stage {
                 "ANULADO"
         );
         cbEstado.setValue("REGISTRADO");
-        cbEstado.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-font-size: 11px;");
+        cbEstado.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cbEstado.setMaxWidth(Double.MAX_VALUE);
         cbEstado.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -358,35 +359,35 @@ public class TrackingDialog extends Stage {
         cbCourier.setEditable(true);
         cbCourier.getItems().addAll("Starken", "Chilexpress", "DHL", "FedEx", "RETIRO_CLIENTE", "Otro Courier");
         cbCourier.setPromptText("Courier / Transportista");
-        cbCourier.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-font-size: 11px;");
+        cbCourier.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cbCourier.setMaxWidth(Double.MAX_VALUE);
 
         txtNumeroCourier = new TextField();
         txtNumeroCourier.setPromptText("N° Seguimiento Courier");
-        txtNumeroCourier.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtNumeroCourier.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         txtRetiradoNombre = new TextField();
         txtRetiradoNombre.setPromptText("Nombre quien retira");
-        txtRetiradoNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtRetiradoNombre.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         txtRetiradoRut = new TextField();
         txtRetiradoRut.setPromptText("RUT Persona");
-        txtRetiradoRut.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtRetiradoRut.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         txtRetiradoPatente = new TextField();
         txtRetiradoPatente.setPromptText("Patente Vehículo");
-        txtRetiradoPatente.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtRetiradoPatente.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         HBox retiradoBox = new HBox(6, txtRetiradoNombre, txtRetiradoRut, txtRetiradoPatente);
 
         Label lblETrk = new Label("Estado Tracking:");
-        lblETrk.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblETrk.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblCour = new Label("Courier (Opcional):");
-        lblCour.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblCour.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblNCour = new Label("N° Courier (Opcional):");
-        lblNCour.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblNCour.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblRet = new Label("Retirado por (Opc):");
-        lblRet.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblRet.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         formGrid.add(lblETrk, 0, 0);
         formGrid.add(cbEstado, 1, 0, 3, 1);
@@ -401,14 +402,14 @@ public class TrackingDialog extends Stage {
 
         txtComentario = new TextArea();
         txtComentario.setPromptText("Observaciones o notas adicionales del cambio de estado...");
-        txtComentario.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 11px;");
+        txtComentario.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtComentario.setPrefRowCount(2);
 
         // Fotos de Evidencia (de PackingList — solo lectura)
         HBox photoHeader = new HBox(10);
         photoHeader.setAlignment(Pos.CENTER_LEFT);
         lblPhotoCount = new Label("Evidencia Fotográfica del Packing:");
-        lblPhotoCount.setStyle("-fx-font-weight: bold; -fx-font-size: 11px; -fx-text-fill: #334155;");
+        lblPhotoCount.setStyle("-fx-font-weight: bold; -fx-font-size: 9.5px; -fx-text-fill: #475569;");
         photoHeader.getChildren().addAll(lblPhotoCount);
 
         photoPreviewPane = new FlowPane();
@@ -482,8 +483,14 @@ public class TrackingDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1280, 780);
+        Scene scene = new Scene(root, 1200, 640);
+        try {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1200, 640, 950, 540);
     }
 
     private void cargarDatos() {

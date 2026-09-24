@@ -28,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.paint.Color;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,10 +82,8 @@ public class BackOrdersDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Gestión de Back Orders");
 
-        setMinWidth(1280);
-        setMinHeight(750);
-        setWidth(1280);
-        setHeight(750);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -145,12 +144,12 @@ public class BackOrdersDialog extends Stage {
 
         txtSearch = new TextField();
         txtSearch.setPromptText("Buscar por Folio, Cliente o Fecha...");
-        txtSearch.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtSearch.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtSearch.setMaxWidth(180);
 
         cbFiltroEstado = new ComboBox<>(FXCollections.observableArrayList("Todos", "Pendientes", "Parciales", "Procesados (Completados)", "Anulados"));
         cbFiltroEstado.setValue("Todos");
-        cbFiltroEstado.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbFiltroEstado.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px; -fx-border-radius: 4px;");
 
         // Helper to update filtered list
         Runnable updateFiltros = () -> {
@@ -251,34 +250,34 @@ public class BackOrdersDialog extends Stage {
         infoGrid.setVgap(8);
 
         lblFolio = new Label("-");
-        lblFolio.setStyle("-fx-font-weight: bold; -fx-text-fill: #1e3a8a;");
+        lblFolio.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #1e3a8a;");
         lblCliente = new Label("-");
-        lblCliente.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblCliente.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #334155;");
         lblBodega = new Label("-");
-        lblBodega.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblBodega.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #334155;");
         lblFecha = new Label("-");
-        lblFecha.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblFecha.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #334155;");
         lblEstado = new Label("-");
-        lblEstado.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblEstado.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #334155;");
         lblZonaReserva = new Label("-");
-        lblZonaReserva.setStyle("-fx-font-weight: bold; -fx-text-fill: #16a34a;");
+        lblZonaReserva.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #16a34a;");
 
-        Label l1 = new Label("Folio BO:"); l1.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
-        Label l2 = new Label("Cliente:"); l2.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        Label l1 = new Label("Folio BO:"); l1.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        Label l2 = new Label("Cliente:"); l2.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         infoGrid.add(l1, 0, 0);
         infoGrid.add(lblFolio, 1, 0);
         infoGrid.add(l2, 2, 0);
         infoGrid.add(lblCliente, 3, 0);
 
-        Label l3 = new Label("Bodega:"); l3.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
-        Label l4 = new Label("Zona Reserva:"); l4.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        Label l3 = new Label("Bodega:"); l3.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        Label l4 = new Label("Zona Reserva:"); l4.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         infoGrid.add(l3, 0, 1);
         infoGrid.add(lblBodega, 1, 1);
         infoGrid.add(l4, 2, 1);
         infoGrid.add(lblZonaReserva, 3, 1);
 
-        Label l5 = new Label("Fecha:"); l5.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
-        Label l6 = new Label("Estado BO:"); l6.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        Label l5 = new Label("Fecha:"); l5.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        Label l6 = new Label("Estado BO:"); l6.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         infoGrid.add(l5, 0, 2);
         infoGrid.add(lblFecha, 1, 2);
         infoGrid.add(l6, 2, 2);
@@ -484,13 +483,14 @@ public class BackOrdersDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1280, 750);
+        Scene scene = new Scene(root, 1200, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1200, 640, 950, 520);
     }
 
     private void mostrarDetalle(BackOrderModel bo) {

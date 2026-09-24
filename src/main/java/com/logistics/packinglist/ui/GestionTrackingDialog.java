@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 public class GestionTrackingDialog extends Stage {
     private final MantenimientoService service = MantenimientoService.getInstance();
@@ -41,8 +42,8 @@ public class GestionTrackingDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Gestión de Tracking de Pedido - " + note.getFolio());
 
-        setMinWidth(550);
-        setMinHeight(600);
+        setMinWidth(520);
+        setMinHeight(500);
 
         construirUI();
     }
@@ -97,55 +98,77 @@ public class GestionTrackingDialog extends Stage {
         grid.setVgap(12);
 
         // Estado
-        grid.add(new Label("Nuevo Estado:"), 0, 0);
+        Label lblEst = new Label("Nuevo Estado:");
+        lblEst.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblEst, 0, 0);
         cbEstado = new ComboBox<>();
         cbEstado.getItems().addAll("REGISTRADO", "EN_PREPARACION", "EN_TRANSITO", "ENTREGADO_A_CLIENTE");
         cbEstado.setValue(note.getEstadoTracking() != null ? note.getEstadoTracking() : "REGISTRADO");
+        cbEstado.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbEstado.setMaxWidth(Double.MAX_VALUE);
         grid.add(cbEstado, 1, 0);
 
         // Ubicación
-        grid.add(new Label("Ubicación/Hito:"), 0, 1);
+        Label lblUbi = new Label("Ubicación/Hito:");
+        lblUbi.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblUbi, 0, 1);
         txtUbicacion = new TextField("Bodega Central Santiago");
         txtUbicacion.setPromptText("Ej: Bodega Central, Aduana Valparaíso");
+        txtUbicacion.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         grid.add(txtUbicacion, 1, 1);
 
         // Transportista / Courier
-        grid.add(new Label("Courier / Transportista:"), 0, 2);
+        Label lblCour = new Label("Courier / Transportista:");
+        lblCour.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblCour, 0, 2);
         cbCourier = new ComboBox<>();
         cbCourier.getItems().addAll("Starken", "Chilexpress", "DHL", "FedEx", "BlueExpress", "Retiro Cliente", "Despacho Interno");
         cbCourier.setEditable(true);
         cbCourier.setPromptText("Seleccione o escriba courier");
+        cbCourier.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbCourier.setMaxWidth(Double.MAX_VALUE);
         grid.add(cbCourier, 1, 2);
 
         // N° Seguimiento Courier
-        grid.add(new Label("N° Seguimiento Courier:"), 0, 3);
+        Label lblNCour = new Label("N° Seguimiento Courier:");
+        lblNCour.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblNCour, 0, 3);
         txtNumCourier = new TextField();
         txtNumCourier.setPromptText("Número de seguimiento del transportista externo");
+        txtNumCourier.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         grid.add(txtNumCourier, 1, 3);
 
         // Coordenadas opcionales
-        grid.add(new Label("Coordenadas (Lat / Lng):"), 0, 4);
+        Label lblCoord = new Label("Coordenadas (Lat / Lng):");
+        lblCoord.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblCoord, 0, 4);
         HBox coordBox = new HBox(8);
         txtLatitud = new TextField();
         txtLatitud.setPromptText("Latitud (-33.4489)");
+        txtLatitud.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtLongitud = new TextField();
         txtLongitud.setPromptText("Longitud (-70.6693)");
+        txtLongitud.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         coordBox.getChildren().addAll(txtLatitud, txtLongitud);
         grid.add(coordBox, 1, 4);
 
         // Comentario / Descripción
-        grid.add(new Label("Comentario / Observación:"), 0, 5);
+        Label lblDesc = new Label("Comentario / Observación:");
+        lblDesc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblDesc, 0, 5);
         txtDescripcion = new TextArea();
         txtDescripcion.setPromptText("Detalles de la preparación, despacho, inspección de aduanas o firma de recepción...");
+        txtDescripcion.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtDescripcion.setPrefRowCount(3);
         grid.add(txtDescripcion, 1, 5);
 
         // URLs de Fotos de Evidencia
-        grid.add(new Label("Fotos Evidencia (URLs):"), 0, 6);
+        Label lblFotos = new Label("Fotos Evidencia (URLs):");
+        lblFotos.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        grid.add(lblFotos, 0, 6);
         txtFotosUrls = new TextArea();
         txtFotosUrls.setPromptText("URLs de fotos separadas por coma (ej. Firestore/Cloud Storage)...");
+        txtFotosUrls.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtFotosUrls.setPrefRowCount(2);
         grid.add(txtFotosUrls, 1, 6);
 
@@ -172,7 +195,13 @@ public class GestionTrackingDialog extends Stage {
         root.getChildren().addAll(header, trackingCard, grid, actions);
 
         Scene scene = new Scene(root);
+        try {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 560, 560, 520, 500);
     }
 
     private void copiarLinkPublico() {

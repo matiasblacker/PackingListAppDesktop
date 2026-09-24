@@ -2,6 +2,7 @@ package com.logistics.packinglist.ui;
 
 import com.logistics.packinglist.model.CompanyModel;
 import com.logistics.packinglist.model.DepositModel;
+import com.logistics.packinglist.model.RegionModel;
 import com.logistics.packinglist.service.MantenimientoService;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -17,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DepositosDialog extends Stage {
@@ -36,7 +38,9 @@ public class DepositosDialog extends Stage {
     private TextField txtBusquedaDepositos;
 
     // Campos de formulario
-    private TextField txtNombre, txtDireccion, txtRegion, txtComuna;
+    private TextField txtNombre, txtDireccion;
+    private ComboBox<String> cbRegion, cbComuna;
+    private List<RegionModel> listaRegiones = new ArrayList<>();
     private CheckBox chkUsarDireccionEmpresa;
     private VBox formContainer;
     private Label lblSeleccionEmpresa;
@@ -169,9 +173,19 @@ public class DepositosDialog extends Stage {
                 selectedDeposit = newSel;
                 txtNombre.setText(newSel.getNombre());
                 chkUsarDireccionEmpresa.setSelected(false);
+                txtDireccion.setDisable(false);
+                cbRegion.setDisable(false);
+                cbComuna.setDisable(false);
                 txtDireccion.setText(newSel.getDireccion() != null ? newSel.getDireccion() : "");
-                txtRegion.setText(newSel.getRegion() != null ? newSel.getRegion() : "");
-                txtComuna.setText(newSel.getComuna() != null ? newSel.getComuna() : "");
+                if (newSel.getRegion() != null && !newSel.getRegion().isEmpty()) {
+                    cbRegion.getSelectionModel().select(newSel.getRegion());
+                    if (newSel.getComuna() != null) {
+                        cbComuna.getSelectionModel().select(newSel.getComuna());
+                    }
+                } else {
+                    cbRegion.getSelectionModel().clearSelection();
+                    cbComuna.getSelectionModel().clearSelection();
+                }
             }
         });
 
@@ -206,61 +220,105 @@ public class DepositosDialog extends Stage {
         chkUsarDireccionEmpresa.setOnAction(e -> {
             if (chkUsarDireccionEmpresa.isSelected()) {
                 txtDireccion.setDisable(true);
-                txtRegion.setDisable(true);
-                txtComuna.setDisable(true);
+                cbRegion.setDisable(true);
+                cbComuna.setDisable(true);
                 if (selectedCompany != null) {
                     txtDireccion.setText(selectedCompany.getDireccion() != null ? selectedCompany.getDireccion() : "");
-                    txtRegion.setText(selectedCompany.getRegion() != null ? selectedCompany.getRegion() : "");
-                    txtComuna.setText(selectedCompany.getComuna() != null ? selectedCompany.getComuna() : "");
+                    if (selectedCompany.getRegion() != null) {
+                        cbRegion.getSelectionModel().select(selectedCompany.getRegion());
+                        if (selectedCompany.getComuna() != null) {
+                            cbComuna.getSelectionModel().select(selectedCompany.getComuna());
+                        }
+                    }
                 }
             } else {
                 txtDireccion.setDisable(false);
-                txtRegion.setDisable(false);
-                txtComuna.setDisable(false);
+                cbRegion.setDisable(false);
+                cbComuna.setDisable(false);
                 txtDireccion.clear();
-                txtRegion.clear();
-                txtComuna.clear();
+                cbRegion.getSelectionModel().clearSelection();
+                cbComuna.getSelectionModel().clearSelection();
             }
         });
         
         txtDireccion = new TextField();
         txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
-        txtRegion = new TextField();
-        txtRegion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
-        txtComuna = new TextField();
-        txtComuna.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
+        
+        cbRegion = new ComboBox<>();
+        cbRegion.setPromptText("Seleccione Región");
+        cbRegion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbRegion.setMaxWidth(Double.MAX_VALUE);
+
+        cbComuna = new ComboBox<>();
+        cbComuna.setPromptText("Seleccione Comuna");
+        cbComuna.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbComuna.setMaxWidth(Double.MAX_VALUE);
+
+        cbRegion.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            cbComuna.getItems().clear();
+            if (newVal != null) {
+                for (RegionModel r : listaRegiones) {
+                    if (r.getRegion().equals(newVal)) {
+                        cbComuna.getItems().addAll(r.getComunas());
+                        break;
+                    }
+                }
+            }
+        });
 
         int row = 0;
         grid.add(crearLabel("Nombre del Depósito:"), 0, row++); grid.add(txtNombre, 0, row++);
         grid.add(chkUsarDireccionEmpresa, 0, row++);
         grid.add(crearLabel("Dirección:"), 0, row++); grid.add(txtDireccion, 0, row++);
-        grid.add(crearLabel("Región:"), 0, row++); grid.add(txtRegion, 0, row++);
-        grid.add(crearLabel("Comuna:"), 0, row++); grid.add(txtComuna, 0, row++);
+        grid.add(crearLabel("Región:"), 0, row++); grid.add(cbRegion, 0, row++);
+        grid.add(crearLabel("Comuna:"), 0, row++); grid.add(cbComuna, 0, row++);
 
         ColumnConstraints colF = new ColumnConstraints();
         colF.setHgrow(Priority.ALWAYS);
         grid.getColumnConstraints().add(colF);
 
         // Botones de acción
-        btnAdd = new Button(" Guardar", new FontAwesomeIconView(FontAwesomeIcon.SAVE));
-        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnAdd.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
+        iconSave.setSize("14px");
+        iconSave.setFill(Color.WHITE);
+        btnAdd = new Button("", iconSave);
+        btnAdd.getStyleClass().add("btn-guardar");
+        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnAdd.setPrefSize(44, 32);
+        btnAdd.setMinSize(44, 32);
+        btnAdd.setMaxSize(44, 32);
         btnAdd.setOnAction(e -> guardar());
+        Tooltip.install(btnAdd, new Tooltip("Guardar"));
 
-        btnClear = new Button(" Limpiar", new FontAwesomeIconView(FontAwesomeIcon.ERASER));
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnClear.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
+        iconClear.setSize("14px");
+        iconClear.setFill(Color.WHITE);
+        btnClear = new Button("", iconClear);
+        btnClear.getStyleClass().add("btn-limpiar");
+        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnClear.setPrefSize(44, 32);
+        btnClear.setMinSize(44, 32);
+        btnClear.setMaxSize(44, 32);
         btnClear.setOnAction(e -> limpiarFormulario());
+        Tooltip.install(btnClear, new Tooltip("Limpiar Formulario"));
 
-        btnDelete = new Button(" Eliminar", new FontAwesomeIconView(FontAwesomeIcon.TRASH));
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnDelete.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+        iconDel.setSize("14px");
+        iconDel.setFill(Color.WHITE);
+        btnDelete = new Button("", iconDel);
+        btnDelete.getStyleClass().add("btn-cancelar");
+        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnDelete.setPrefSize(44, 32);
+        btnDelete.setMinSize(44, 32);
+        btnDelete.setMaxSize(44, 32);
         btnDelete.setOnAction(e -> eliminar());
+        Tooltip.install(btnDelete, new Tooltip("Eliminar"));
 
-        VBox actionBox = new VBox(8, btnAdd, btnClear, btnDelete);
-        actionBox.setPadding(new Insets(15, 0, 0, 0));
+        HBox actionRow = new HBox(8, btnAdd, btnClear, btnDelete);
+        actionRow.setAlignment(Pos.CENTER_RIGHT);
+        actionRow.setPadding(new Insets(10, 0, 0, 0));
 
-        formContainer.getChildren().addAll(grid, actionBox);
+        formContainer.getChildren().add(grid);
         formPane.getChildren().addAll(lblFormTitle, lblSeleccionEmpresa, formContainer);
         mainSplit.getItems().add(formPane);
 
@@ -270,25 +328,24 @@ public class DepositosDialog extends Stage {
             mainSplit.setDividerPositions(0.5);
         }
 
-        root.getChildren().addAll(headerBox, mainSplit);
+        root.getChildren().addAll(headerBox, mainSplit, actionRow);
 
-        Scene scene = new Scene(root, 1080, 680);
+        Scene scene = new Scene(root, 1080, 640);
         setScene(scene);
         setTitle("Depósitos y Áreas");
+        com.logistics.packinglist.utils.ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 850, 520);
 
         actualizarEstadoFormulario();
     }
 
     private void actualizarEstadoFormulario() {
-        if (isAdminSis && selectedCompany == null) {
-            formContainer.setDisable(true);
-            lblSeleccionEmpresa.setManaged(true);
-            lblSeleccionEmpresa.setVisible(true);
-        } else {
-            formContainer.setDisable(false);
-            lblSeleccionEmpresa.setManaged(false);
-            lblSeleccionEmpresa.setVisible(false);
-        }
+        boolean disabled = isAdminSis && selectedCompany == null;
+        formContainer.setDisable(disabled);
+        btnAdd.setDisable(disabled);
+        btnClear.setDisable(disabled);
+        btnDelete.setDisable(disabled);
+        lblSeleccionEmpresa.setManaged(disabled);
+        lblSeleccionEmpresa.setVisible(disabled);
     }
 
     private void cargarDatos() {
@@ -299,8 +356,15 @@ public class DepositosDialog extends Stage {
                     javafx.application.Platform.runLater(() -> companiesList.setAll(empresas));
                 }
 
+                List<RegionModel> regiones = service.obtenerRegiones();
                 List<DepositModel> depositos = service.obtenerDepositos();
                 javafx.application.Platform.runLater(() -> {
+                    listaRegiones = regiones;
+                    cbRegion.getItems().clear();
+                    for (RegionModel r : regiones) {
+                        cbRegion.getItems().add(r.getRegion());
+                    }
+
                     depositsList.setAll(depositos);
                     
                     if (isAdminSis) {
@@ -325,8 +389,8 @@ public class DepositosDialog extends Stage {
 
         String nombre = txtNombre.getText().trim();
         String dir = txtDireccion.getText().trim();
-        String reg = txtRegion.getText().trim();
-        String com = txtComuna.getText().trim();
+        String reg = cbRegion.getValue() != null ? cbRegion.getValue() : "";
+        String com = cbComuna.getValue() != null ? cbComuna.getValue() : "";
 
         if (nombre.isEmpty()) {
             alerta("Datos requeridos", "El Nombre es un campo obligatorio.");
@@ -393,11 +457,11 @@ public class DepositosDialog extends Stage {
         txtNombre.clear();
         chkUsarDireccionEmpresa.setSelected(false);
         txtDireccion.setDisable(false);
-        txtRegion.setDisable(false);
-        txtComuna.setDisable(false);
+        cbRegion.setDisable(false);
+        cbComuna.setDisable(false);
         txtDireccion.clear();
-        txtRegion.clear();
-        txtComuna.clear();
+        cbRegion.getSelectionModel().clearSelection();
+        cbComuna.getSelectionModel().clearSelection();
     }
 
     private void alerta(String titulo, String msg) {
@@ -418,7 +482,8 @@ public class DepositosDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lbl.getStyleClass().add("form-label");
+        lbl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         return lbl;
     }
 }

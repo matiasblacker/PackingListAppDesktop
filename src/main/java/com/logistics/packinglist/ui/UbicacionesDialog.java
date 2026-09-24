@@ -60,8 +60,8 @@ public class UbicacionesDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Diseño de Espacios y Ubicaciones Físicas (WMS)");
 
-        setMinWidth(1100);
-        setMinHeight(700);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -213,13 +213,14 @@ public class UbicacionesDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1180, 720);
+        Scene scene = new Scene(root, 1080, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 950, 520);
     }
 
     private GridPane crearFormularioUbicacion() {
@@ -230,25 +231,25 @@ public class UbicacionesDialog extends Stage {
 
         cbTipoSoporte = new ComboBox<>(FXCollections.observableArrayList("RACK", "ESTANTE", "SUELO", "CONTENEDOR"));
         cbTipoSoporte.setValue("RACK");
-        cbTipoSoporte.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbTipoSoporte.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px; -fx-border-radius: 4px;");
         cbTipoSoporte.setMaxWidth(Double.MAX_VALUE);
 
         txtPasillo = new TextField();
         txtPasillo.setPromptText("Ej: A, B, 01");
-        txtPasillo.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtPasillo.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
 
         txtAltura = new TextField();
         txtAltura.setPromptText("Ej: Nivel 1");
-        txtAltura.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtAltura.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
 
         txtPosicion = new TextField();
         txtPosicion.setPromptText("Ej: A3, B1");
-        txtPosicion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtPosicion.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
 
         txtCodigoGenerado = new TextField();
         txtCodigoGenerado.setEditable(false);
         txtCodigoGenerado.setPromptText("Generado por coordenadas");
-        txtCodigoGenerado.setStyle("-fx-background-color: #f1f5f9; -fx-border-color: #cbd5e1; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-font-weight: bold; -fx-text-fill: #1e3a8a;");
+        txtCodigoGenerado.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-color: #f1f5f9; -fx-border-color: #cbd5e1; -fx-border-radius: 4px; -fx-background-radius: 4px; -fx-font-weight: bold; -fx-text-fill: #1e3a8a;");
 
         // Listeners para previsualizar código
         Runnable updateCodePreview = () -> {
@@ -267,15 +268,15 @@ public class UbicacionesDialog extends Stage {
         txtPosicion.textProperty().addListener((o, ov, nv) -> updateCodePreview.run());
 
         Label lblSop = new Label("Soporte:");
-        lblSop.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblSop.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblPas = new Label("Pasillo:");
-        lblPas.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblPas.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblPos = new Label("Posición:");
-        lblPos.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblPos.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblAlt = new Label("Nivel/Altura:");
-        lblAlt.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblAlt.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblCod = new Label("Código Ubic.:");
-        lblCod.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblCod.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         grid.add(lblSop, 0, 0);
         grid.add(cbTipoSoporte, 1, 0);
@@ -730,6 +731,7 @@ public class UbicacionesDialog extends Stage {
         );
 
         Scene scene = new Scene(layout, 350, 270);
+        ScreenUtil.applyResponsiveTheme(scene);
         stage.setScene(scene);
         stage.setResizable(false);
         ScreenUtil.centerOnOwner(stage, this);
@@ -841,6 +843,7 @@ public class UbicacionesDialog extends Stage {
         layout.getChildren().addAll(grid, lblCalculo, btnGenerar);
 
         Scene scene = new Scene(layout, 410, 260);
+        ScreenUtil.applyResponsiveTheme(scene);
         stage.setScene(scene);
         stage.setResizable(false);
         ScreenUtil.centerOnOwner(stage, this);

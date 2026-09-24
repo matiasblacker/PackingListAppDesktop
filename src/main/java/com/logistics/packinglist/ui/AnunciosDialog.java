@@ -83,9 +83,8 @@ public class AnunciosDialog extends Stage {
         this.filteredAnnouncements = new FilteredList<>(announcementsList, a -> true);
                 initOwner(owner);
         initModality(Modality.APPLICATION_MODAL);
-        setTitle("Anuncios de Carga");
-        setMinWidth(950);
-        setMinHeight(650);
+        setMinWidth(900);
+        setMinHeight(520);
 
         construirUI();
         cargarCamposPersonalizadosDocumento();
@@ -191,12 +190,12 @@ public class AnunciosDialog extends Stage {
 
         cbBodega = new ComboBox<>();
         cbBodega.setPromptText("Seleccione Bodega");
-        cbBodega.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbBodega.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbBodega.setMaxWidth(Double.MAX_VALUE);
 
         cbProveedor = new AutocompleteComboBox<>();
         cbProveedor.setPromptText("Seleccione Proveedor");
-        cbProveedor.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbProveedor.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbProveedor.setMaxWidth(Double.MAX_VALUE);
         cbProveedor.setFilterPredicate((s, text) -> {
             return (s.getRazonSocial() != null && s.getRazonSocial().toLowerCase().contains(text))
@@ -206,23 +205,23 @@ public class AnunciosDialog extends Stage {
 
         txtNumeroBl = new TextField();
         txtNumeroBl.setPromptText("N° BL (Opcional)");
-        txtNumeroBl.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtNumeroBl.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
 
         txtOrdenCompra = new TextField();
         txtOrdenCompra.setPromptText("Orden de Compra (Opcional)");
-        txtOrdenCompra.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtOrdenCompra.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
 
         chkEsContenedor = new CheckBox("Contenedor");
-        chkEsContenedor.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #334155;");
+        chkEsContenedor.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
 
         txtNumeroContenedor = new TextField();
         txtNumeroContenedor.setPromptText("N° Contenedor");
-        txtNumeroContenedor.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtNumeroContenedor.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtNumeroContenedor.setDisable(true);
 
         txtDigitoContenedor = new TextField();
         txtDigitoContenedor.setPromptText("DV");
-        txtDigitoContenedor.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtDigitoContenedor.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtDigitoContenedor.setPrefWidth(45);
         txtDigitoContenedor.setDisable(true);
 
@@ -240,19 +239,19 @@ public class AnunciosDialog extends Stage {
 
         txtObservaciones = new TextArea();
         txtObservaciones.setPromptText("Observaciones...");
-        txtObservaciones.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
-        txtObservaciones.setPrefHeight(72);
+        txtObservaciones.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtObservaciones.setPrefHeight(60);
 
         Label lblBod = new Label("Bodega:");
-        lblBod.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblBod.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblProv = new Label("Proveedor:");
-        lblProv.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblProv.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblBl = new Label("N° BL:");
-        lblBl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblBl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblOc = new Label("Orden Compra:");
-        lblOc.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblOc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblObs = new Label("Observaciones:");
-        lblObs.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblObs.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         // Fila 0: Bodega (col 0,1) | Proveedor (col 2,3)
         formGrid.add(lblBod, 0, 0);
@@ -403,8 +402,8 @@ public class AnunciosDialog extends Stage {
 
         tblDetails = new TableView<>();
         tblDetails.setItems(detailRows);
-        tblDetails.setMinHeight(240);
-        tblDetails.setPrefHeight(280);
+        tblDetails.setMinHeight(160);
+        tblDetails.setPrefHeight(200);
         tblDetails.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tblDetails.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
@@ -554,13 +553,9 @@ public class AnunciosDialog extends Stage {
 
         tblComercial.getSelectionModel().selectedItemProperty().addListener(selectionListener);
 
-        Scene scene = new Scene(root, 950, 650);
-        try {
-            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Scene scene = new Scene(root, 1050, 640);
         setScene(scene);
+        com.logistics.packinglist.utils.ScreenUtil.fitDialogToScreen(this, getOwner(), 1050, 640, 900, 520);
     }
 
     private TableView<ReceptionAnnouncementModel> crearTablaAnuncios(FilteredList<ReceptionAnnouncementModel> filteredList) {

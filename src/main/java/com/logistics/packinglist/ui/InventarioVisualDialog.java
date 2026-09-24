@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 import java.util.*;
 
@@ -70,8 +71,8 @@ public class InventarioVisualDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Mapa e Inventario Visual de Bodega (WMS)");
 
-        setMinWidth(1100);
-        setMinHeight(700);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatosIniciales();
@@ -334,13 +335,14 @@ public class InventarioVisualDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1280, 780);
+        Scene scene = new Scene(root, 1200, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1200, 640, 950, 520);
     }
 
     private void cargarDatosIniciales() {

@@ -34,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,8 +99,8 @@ public class StockDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Inventario General");
 
-        setMinWidth(1100);
-        setMinHeight(700);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -133,18 +134,18 @@ public class StockDialog extends Stage {
 
         txtSkuFilter = new TextField();
         txtSkuFilter.setPromptText("Buscar por SKU o descripción...");
-        txtSkuFilter.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtSkuFilter.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtSkuFilter.setPrefWidth(250);
         txtSkuFilter.textProperty().addListener((obs, old, newVal) -> aplicarFiltros());
 
         cbProveedorFilter = new ComboBox<>();
         cbProveedorFilter.setPromptText("Seleccione Proveedor");
-        cbProveedorFilter.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbProveedorFilter.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px; -fx-border-radius: 4px;");
         cbProveedorFilter.setPrefWidth(280);
         cbProveedorFilter.valueProperty().addListener((obs, old, newVal) -> aplicarFiltros());
 
         Button btnClear = new Button("Limpiar Filtros", new FontAwesomeIconView(FontAwesomeIcon.REFRESH));
-        btnClear.setStyle("-fx-background-color: #e9ecef; -fx-text-fill: #495057; -fx-cursor: hand; -fx-font-weight: bold;");
+        btnClear.setStyle("-fx-font-size: 10px; -fx-padding: 3px 8px; -fx-background-color: #e9ecef; -fx-text-fill: #495057; -fx-cursor: hand; -fx-font-weight: bold;");
         btnClear.setOnAction(e -> {
             txtSkuFilter.clear();
             if (!cbProveedorFilter.getItems().isEmpty()) {
@@ -153,9 +154,9 @@ public class StockDialog extends Stage {
         });
 
         Label lblBuscar = new Label("Buscar SKU/Nombre:");
-        lblBuscar.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblBuscar.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblProv = new Label("Proveedor:");
-        lblProv.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblProv.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         filterBar.getChildren().addAll(
                 lblBuscar, txtSkuFilter,
@@ -218,34 +219,34 @@ public class StockDialog extends Stage {
         prodGrid.setVgap(6);
 
         Label lblCatTitle = new Label("Categoría:");
-        lblCatTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblCatTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdCategory = new Label("-");
-        lblProdCategory.setStyle("-fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblProdCategory.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
 
         Label lblProvTitle = new Label("Proveedor:");
-        lblProvTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblProvTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdSupplier = new Label("-");
-        lblProdSupplier.setStyle("-fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblProdSupplier.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
 
         Label lblPriceTitle = new Label("Precio Lista:");
-        lblPriceTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblPriceTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdPrice = new Label("-");
-        lblProdPrice.setStyle("-fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblProdPrice.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
 
         Label lblPaisTitle = new Label("País Origen:");
-        lblPaisTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblPaisTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdPais = new Label("-");
-        lblProdPais.setStyle("-fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblProdPais.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
 
         Label lblPackTitle = new Label("Packing:");
-        lblPackTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblPackTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdPacking = new Label("-");
-        lblProdPacking.setStyle("-fx-font-weight: bold; -fx-text-fill: #0f172a;");
+        lblProdPacking.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
 
         Label lblTotalTitle = new Label("Stock Total:");
-        lblTotalTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        lblTotalTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProdTotalStock = new Label("-");
-        lblProdTotalStock.setStyle("-fx-font-weight: bold; -fx-text-fill: #2B6CB0;");
+        lblProdTotalStock.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #2B6CB0;");
 
         prodGrid.add(lblCatTitle, 0, 0); prodGrid.add(lblProdCategory, 1, 0);
         prodGrid.add(lblProvTitle, 0, 1); prodGrid.add(lblProdSupplier, 1, 1);
@@ -257,7 +258,9 @@ public class StockDialog extends Stage {
         vboxAtributosPersonalizados = new VBox(4);
         vboxAtributosPersonalizados.setPadding(new Insets(5, 0, 0, 0));
 
-        cardProduct.getChildren().addAll(lblProdSkuName, prodGrid, new Separator(), new Label("Atributos Personalizados:"), vboxAtributosPersonalizados);
+        Label lblAttrTitle = new Label("Atributos Personalizados:");
+        lblAttrTitle.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        cardProduct.getChildren().addAll(lblProdSkuName, prodGrid, new Separator(), lblAttrTitle, vboxAtributosPersonalizados);
 
         // Card 2: Ubicaciones Físicas en Bodega
         VBox cardLocations = new VBox(6);
@@ -379,11 +382,12 @@ public class StockDialog extends Stage {
 
         root.getChildren().addAll(headerBox, filterBar, mainSplit);
 
-        Scene scene = new Scene(root, 1100, 700);
+        Scene scene = new Scene(root, 1100, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception ignored) {}
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1100, 640, 950, 520);
     }
 
     public void cargarDatos() {
@@ -605,7 +609,7 @@ public class StockDialog extends Stage {
                         continue;
                     }
                     Label lblAttr = new Label(key.toUpperCase() + ": " + entry.getValue());
-                    lblAttr.setStyle("-fx-font-size: 11px; -fx-text-fill: #555; -fx-padding: 2 6 2 6; -fx-background-color: #e9ecef; -fx-background-radius: 3;");
+                    lblAttr.setStyle("-fx-font-size: 9.5px; -fx-text-fill: #555; -fx-padding: 2 6 2 6; -fx-background-color: #e9ecef; -fx-background-radius: 3;");
                     vboxAtributosPersonalizados.getChildren().add(lblAttr);
                 }
             }

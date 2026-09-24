@@ -2,6 +2,7 @@ package com.logistics.packinglist.ui;
 
 import com.logistics.packinglist.model.CompanyModel;
 import com.logistics.packinglist.model.DepositModel;
+import com.logistics.packinglist.model.RegionModel;
 import com.logistics.packinglist.model.WarehouseModel;
 import com.logistics.packinglist.service.MantenimientoService;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -18,6 +19,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BodegasDialog extends Stage {
@@ -39,8 +41,13 @@ public class BodegasDialog extends Stage {
 
     // Campos de formulario
     private TextField txtNombre;
-    private TextField txtCodigo;
+    private CheckBox chkUsarDireccionDeposito;
     private TextField txtDireccion;
+    private ComboBox<String> cbRegion;
+    private ComboBox<String> cbComuna;
+    private List<RegionModel> listaRegiones = new ArrayList<>();
+    private VBox formContainer;
+    private Label lblSeleccionDeposito;
 
     private Button btnAdd;
     private Button btnDelete;
@@ -109,6 +116,7 @@ public class BodegasDialog extends Stage {
             selectedDeposit = newSel;
             selectedWarehouse = null;
             limpiarFormulario();
+            actualizarEstadoFormulario();
             
             if (newSel != null) {
                 cargarBodegasDeDeposito(newSel.getId());
@@ -134,7 +142,7 @@ public class BodegasDialog extends Stage {
                 if (newVal == null || newVal.isEmpty()) return true;
                 String lower = newVal.toLowerCase();
                 return (w.getNombre() != null && w.getNombre().toLowerCase().contains(lower))
-                        || (w.getCodigo() != null && w.getCodigo().toLowerCase().contains(lower));
+                        || (w.getDireccion() != null && w.getDireccion().toLowerCase().contains(lower));
             });
         });
 
@@ -143,20 +151,44 @@ public class BodegasDialog extends Stage {
         tablaBodegas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tablaBodegas.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
-        TableColumn<WarehouseModel, String> colBodCodigo = new TableColumn<>("Código");
-        colBodCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
         TableColumn<WarehouseModel, String> colBodNombre = new TableColumn<>("Bodega");
         colBodNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
+        TableColumn<WarehouseModel, String> colBodDir = new TableColumn<>("Dirección");
+        colBodDir.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDireccion() != null ? c.getValue().getDireccion() : ""));
+        TableColumn<WarehouseModel, String> colBodReg = new TableColumn<>("Región");
+        colBodReg.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getRegion() != null ? c.getValue().getRegion() : ""));
+        TableColumn<WarehouseModel, String> colBodCom = new TableColumn<>("Comuna");
+        colBodCom.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getComuna() != null ? c.getValue().getComuna() : ""));
         
-        tablaBodegas.getColumns().addAll(colBodCodigo, colBodNombre);
+        tablaBodegas.getColumns().addAll(colBodNombre, colBodDir, colBodReg, colBodCom);
         VBox.setVgrow(tablaBodegas, Priority.ALWAYS);
 
         tablaBodegas.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
                 selectedWarehouse = newSel;
-                txtCodigo.setText(newSel.getCodigo());
                 txtNombre.setText(newSel.getNombre());
+
+                boolean mismaDireccion = selectedDeposit != null 
+                        && java.util.Objects.equals(selectedDeposit.getDireccion(), newSel.getDireccion())
+                        && java.util.Objects.equals(selectedDeposit.getRegion(), newSel.getRegion())
+                        && java.util.Objects.equals(selectedDeposit.getComuna(), newSel.getComuna());
+
+                chkUsarDireccionDeposito.setSelected(mismaDireccion);
+                txtDireccion.setDisable(mismaDireccion);
+                cbRegion.setDisable(mismaDireccion);
+                cbComuna.setDisable(mismaDireccion);
+
                 txtDireccion.setText(newSel.getDireccion() != null ? newSel.getDireccion() : "");
+                if (newSel.getRegion() != null && !newSel.getRegion().isEmpty()) {
+                    cbRegion.getSelectionModel().select(newSel.getRegion());
+                    if (newSel.getComuna() != null) {
+                        cbComuna.getSelectionModel().select(newSel.getComuna());
+                    }
+                } else {
+                    cbRegion.getSelectionModel().clearSelection();
+                    cbComuna.getSelectionModel().clearSelection();
+                }
+                actualizarEstadoFormulario();
             }
         });
 
@@ -168,52 +200,129 @@ public class BodegasDialog extends Stage {
         
         Label lblFormTitle = new Label("Registro de Bodega");
         lblFormTitle.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
-        
+
+        lblSeleccionDeposito = new Label("← Seleccione un depósito obligatoriamente");
+        lblSeleccionDeposito.setStyle("-fx-font-size: 12px; -fx-text-fill: #ef4444; -fx-font-weight: bold;");
+        lblSeleccionDeposito.setManaged(true);
+        lblSeleccionDeposito.setVisible(true);
+
+        formContainer = new VBox(12);
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
-        grid.setVgap(15);
+        grid.setVgap(10);
         grid.setPadding(new Insets(10, 0, 10, 0));
 
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre de la Bodega");
         txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
         
-        txtCodigo = new TextField();
-        txtCodigo.setPromptText("Código (e.g. BOD-01)");
-        txtCodigo.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
-        
+        chkUsarDireccionDeposito = new CheckBox("Usar dirección del depósito");
+        chkUsarDireccionDeposito.setStyle("-fx-font-size: 11px; -fx-text-fill: #334155;");
+        chkUsarDireccionDeposito.setOnAction(e -> {
+            if (chkUsarDireccionDeposito.isSelected()) {
+                txtDireccion.setDisable(true);
+                cbRegion.setDisable(true);
+                cbComuna.setDisable(true);
+                if (selectedDeposit != null) {
+                    txtDireccion.setText(selectedDeposit.getDireccion() != null ? selectedDeposit.getDireccion() : "");
+                    if (selectedDeposit.getRegion() != null) {
+                        cbRegion.getSelectionModel().select(selectedDeposit.getRegion());
+                        if (selectedDeposit.getComuna() != null) {
+                            cbComuna.getSelectionModel().select(selectedDeposit.getComuna());
+                        }
+                    }
+                }
+            } else {
+                txtDireccion.setDisable(false);
+                cbRegion.setDisable(false);
+                cbComuna.setDisable(false);
+                txtDireccion.clear();
+                cbRegion.getSelectionModel().clearSelection();
+                cbComuna.getSelectionModel().clearSelection();
+            }
+        });
+
         txtDireccion = new TextField();
-        txtDireccion.setPromptText("Dirección (Opcional)");
+        txtDireccion.setPromptText("Dirección");
         txtDireccion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-font-size: 11px;");
 
-        grid.add(crearLabel("Código:"), 0, 0); grid.add(txtCodigo, 0, 1);
-        grid.add(crearLabel("Nombre:"), 0, 2); grid.add(txtNombre, 0, 3);
-        grid.add(crearLabel("Dirección:"), 0, 4); grid.add(txtDireccion, 0, 5);
+        cbRegion = new ComboBox<>();
+        cbRegion.setPromptText("Seleccione Región");
+        cbRegion.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbRegion.setMaxWidth(Double.MAX_VALUE);
+
+        cbComuna = new ComboBox<>();
+        cbComuna.setPromptText("Seleccione Comuna");
+        cbComuna.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbComuna.setMaxWidth(Double.MAX_VALUE);
+
+        cbRegion.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            cbComuna.getItems().clear();
+            if (newVal != null) {
+                for (RegionModel r : listaRegiones) {
+                    if (r.getRegion().equals(newVal)) {
+                        cbComuna.getItems().addAll(r.getComunas());
+                        break;
+                    }
+                }
+            }
+        });
+
+        int row = 0;
+        grid.add(crearLabel("Nombre de la Bodega:"), 0, row++); grid.add(txtNombre, 0, row++);
+        grid.add(chkUsarDireccionDeposito, 0, row++);
+        grid.add(crearLabel("Dirección:"), 0, row++); grid.add(txtDireccion, 0, row++);
+        grid.add(crearLabel("Región:"), 0, row++); grid.add(cbRegion, 0, row++);
+        grid.add(crearLabel("Comuna:"), 0, row++); grid.add(cbComuna, 0, row++);
 
         ColumnConstraints colF = new ColumnConstraints();
         colF.setHgrow(Priority.ALWAYS);
         grid.getColumnConstraints().add(colF);
 
         // Botones de acción
-        btnAdd = new Button(" Guardar", new FontAwesomeIconView(FontAwesomeIcon.SAVE));
-        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnAdd.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
+        iconSave.setSize("14px");
+        iconSave.setFill(Color.WHITE);
+        btnAdd = new Button("", iconSave);
+        btnAdd.getStyleClass().add("btn-guardar");
+        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnAdd.setPrefSize(44, 32);
+        btnAdd.setMinSize(44, 32);
+        btnAdd.setMaxSize(44, 32);
         btnAdd.setOnAction(e -> guardar());
+        Tooltip.install(btnAdd, new Tooltip("Guardar"));
 
-        btnClear = new Button(" Limpiar", new FontAwesomeIconView(FontAwesomeIcon.ERASER));
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnClear.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
+        iconClear.setSize("14px");
+        iconClear.setFill(Color.WHITE);
+        btnClear = new Button("", iconClear);
+        btnClear.getStyleClass().add("btn-limpiar");
+        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnClear.setPrefSize(44, 32);
+        btnClear.setMinSize(44, 32);
+        btnClear.setMaxSize(44, 32);
         btnClear.setOnAction(e -> limpiarFormulario());
+        Tooltip.install(btnClear, new Tooltip("Limpiar Formulario"));
 
-        btnDelete = new Button(" Eliminar", new FontAwesomeIconView(FontAwesomeIcon.TRASH));
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnDelete.setMaxWidth(Double.MAX_VALUE);
+        FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+        iconDel.setSize("14px");
+        iconDel.setFill(Color.WHITE);
+        btnDelete = new Button("", iconDel);
+        btnDelete.getStyleClass().add("btn-cancelar");
+        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
+        btnDelete.setPrefSize(44, 32);
+        btnDelete.setMinSize(44, 32);
+        btnDelete.setMaxSize(44, 32);
         btnDelete.setOnAction(e -> eliminar());
+        Tooltip.install(btnDelete, new Tooltip("Eliminar"));
 
-        VBox actionBox = new VBox(8, btnAdd, btnClear, btnDelete);
-        actionBox.setPadding(new Insets(15, 0, 0, 0));
+        HBox actionRow = new HBox(8, btnAdd, btnClear, btnDelete);
+        actionRow.setAlignment(Pos.CENTER_RIGHT);
+        actionRow.setPadding(new Insets(10, 0, 0, 0));
 
-        formPane.getChildren().addAll(lblFormTitle, grid, actionBox);
+        formContainer.getChildren().add(grid);
+        formPane.getChildren().addAll(lblFormTitle, lblSeleccionDeposito, formContainer);
 
         SplitPane mainSplit = new SplitPane();
         mainSplit.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
@@ -222,11 +331,24 @@ public class BodegasDialog extends Stage {
         mainSplit.setDividerPositions(0.3, 0.65);
         VBox.setVgrow(mainSplit, Priority.ALWAYS);
 
-        root.getChildren().addAll(headerBox, mainSplit);
+        root.getChildren().addAll(headerBox, mainSplit, actionRow);
 
-        Scene scene = new Scene(root, 1080, 680);
+        Scene scene = new Scene(root, 1080, 640);
         setScene(scene);
         setTitle("Bodegas y Zonas");
+        com.logistics.packinglist.utils.ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 850, 520);
+
+        actualizarEstadoFormulario();
+    }
+
+    private void actualizarEstadoFormulario() {
+        boolean noDeposit = selectedDeposit == null;
+        formContainer.setDisable(noDeposit);
+        btnAdd.setDisable(noDeposit);
+        btnClear.setDisable(noDeposit);
+        btnDelete.setDisable(noDeposit || selectedWarehouse == null);
+        lblSeleccionDeposito.setVisible(noDeposit);
+        lblSeleccionDeposito.setManaged(noDeposit);
     }
 
     private void cargarBodegasDeDeposito(String depositId) {
@@ -245,8 +367,14 @@ public class BodegasDialog extends Stage {
     private void cargarDatos() {
         new Thread(() -> {
             try {
+                List<RegionModel> regiones = service.obtenerRegiones();
                 List<DepositModel> depositos = service.obtenerDepositos();
                 javafx.application.Platform.runLater(() -> {
+                    listaRegiones = regiones;
+                    cbRegion.getItems().clear();
+                    for (RegionModel r : regiones) {
+                        cbRegion.getItems().add(r.getRegion());
+                    }
                     depositsList.setAll(depositos);
                 });
             } catch (Exception e) {
@@ -257,23 +385,28 @@ public class BodegasDialog extends Stage {
 
     private void guardar() {
         if (selectedDeposit == null) {
-            alerta("Datos requeridos", "Debe seleccionar un Depósito de la lista.");
+            alerta("Depósito requerido", "Debe seleccionar un Depósito de la lista obligatoriamente.");
             return;
         }
 
-        String codigo = txtCodigo.getText().trim();
         String nombre = txtNombre.getText().trim();
         String dir = txtDireccion.getText().trim();
+        String reg = cbRegion.getValue() != null ? cbRegion.getValue() : "";
+        String com = cbComuna.getValue() != null ? cbComuna.getValue() : "";
 
-        if (codigo.isEmpty() || nombre.isEmpty()) {
-            alerta("Datos requeridos", "Código y Nombre son campos obligatorios.");
+        if (nombre.isEmpty()) {
+            alerta("Datos requeridos", "El Nombre de la bodega es obligatorio.");
             return;
         }
 
         WarehouseModel warehouse = selectedWarehouse != null ? selectedWarehouse : new WarehouseModel();
-        warehouse.setCodigo(codigo);
+        if (warehouse.getCodigo() == null || warehouse.getCodigo().trim().isEmpty()) {
+            warehouse.setCodigo(generarCodigo(nombre));
+        }
         warehouse.setNombre(nombre);
         warehouse.setDireccion(dir);
+        warehouse.setRegion(reg);
+        warehouse.setComuna(com);
         warehouse.setDepositId(selectedDeposit.getId());
 
         if (isAdminSis && selectedDeposit.getCompanyId() != null) {
@@ -289,7 +422,9 @@ public class BodegasDialog extends Stage {
                 }
                 javafx.application.Platform.runLater(() -> {
                     limpiarFormulario();
-                    cargarDatos();
+                    if (selectedDeposit != null) {
+                        cargarBodegasDeDeposito(selectedDeposit.getId());
+                    }
                     informacion("Éxito", "Bodega guardada correctamente.");
                 });
             } catch (Exception e) {
@@ -316,7 +451,9 @@ public class BodegasDialog extends Stage {
                     service.eliminarBodega(selectedWarehouse.getId());
                     javafx.application.Platform.runLater(() -> {
                         limpiarFormulario();
-                        cargarDatos();
+                        if (selectedDeposit != null) {
+                            cargarBodegasDeDeposito(selectedDeposit.getId());
+                        }
                         informacion("Éxito", "Bodega eliminada.");
                     });
                 } catch (Exception e) {
@@ -331,9 +468,32 @@ public class BodegasDialog extends Stage {
     private void limpiarFormulario() {
         selectedWarehouse = null;
         tablaBodegas.getSelectionModel().clearSelection();
-        txtCodigo.clear();
         txtNombre.clear();
+        chkUsarDireccionDeposito.setSelected(false);
+        txtDireccion.setDisable(false);
+        cbRegion.setDisable(false);
+        cbComuna.setDisable(false);
         txtDireccion.clear();
+        cbRegion.getSelectionModel().clearSelection();
+        cbComuna.getSelectionModel().clearSelection();
+        actualizarEstadoFormulario();
+    }
+
+    private String generarCodigo(String nombre) {
+        String prefijo = "BOD";
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            String[] parts = nombre.trim().split("\\s+");
+            StringBuilder sb = new StringBuilder();
+            for (String p : parts) {
+                if (!p.isEmpty() && Character.isLetterOrDigit(p.charAt(0))) {
+                    sb.append(Character.toUpperCase(p.charAt(0)));
+                }
+            }
+            if (sb.length() >= 2) {
+                prefijo = sb.substring(0, Math.min(sb.length(), 4));
+            }
+        }
+        return prefijo + "-" + (int)(Math.random() * 9000 + 1000);
     }
 
     private void alerta(String titulo, String msg) {
@@ -354,7 +514,8 @@ public class BodegasDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lbl.getStyleClass().add("form-label");
+        lbl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         return lbl;
     }
 }

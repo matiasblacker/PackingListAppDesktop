@@ -16,6 +16,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import netscape.javascript.JSObject;
 
 public class MapPickerModal extends Stage {
@@ -85,11 +86,13 @@ public class MapPickerModal extends Stage {
 
         txtLat = new TextField(String.format("%.6f", selectedLat));
         txtLat.setPrefWidth(140);
+        txtLat.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtLng = new TextField(String.format("%.6f", selectedLng));
         txtLng.setPrefWidth(140);
+        txtLng.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         Button btnConfirm = new Button("Confirmar Coordenadas", new FontAwesomeIconView(FontAwesomeIcon.CHECK));
-        btnConfirm.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 16;");
+        btnConfirm.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 6 14; -fx-font-size: 10px;");
         btnConfirm.setOnAction(e -> {
             try {
                 selectedLat = Double.parseDouble(txtLat.getText().replace(",", ".").trim());
@@ -106,17 +109,26 @@ public class MapPickerModal extends Stage {
         btnCancel.getStyleClass().add("btn-cancelar");
         btnCancel.setOnAction(e -> close());
 
+        Label lblLat = new Label("Latitud:");
+        lblLat.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblLng = new Label("Longitud:");
+        lblLng.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+
         bottomBox.getChildren().addAll(
-                new Label("Latitud:"), txtLat,
-                new Label("Longitud:"), txtLng,
+                lblLat, txtLat,
+                lblLng, txtLng,
                 new Region(), btnCancel, btnConfirm
         );
         HBox.setHgrow(bottomBox.getChildren().get(4), Priority.ALWAYS);
 
         root.getChildren().addAll(header, webView, bottomBox);
 
-        Scene scene = new Scene(root, 750, 550);
+        Scene scene = new Scene(root, 750, 520);
+        try {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        } catch (Exception ignored) {}
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 750, 520, 700, 450);
     }
 
     public class JavaBridge {

@@ -1,8 +1,8 @@
 /* styles.css — Packing List App */
 
 .root {
-    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    -fx-font-size: 13px;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", -apple-system, Arial, sans-serif;
+    -fx-font-size: 11.5px;
     -fx-background-color: #f8f9fa;
 }
 
@@ -11,19 +11,20 @@
     -fx-background-color: white;
     -fx-border-color: #dce3ea;
     -fx-border-width: 1;
-    -fx-font-size: 11px;
+    -fx-font-size: 10px;
 }
 
 .table-view .column-header {
     -fx-background-color: #1E508C;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-padding: 8 6;
+    -fx-padding: 6 5;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-font-size: 10px;
 }
 
 .table-view .table-row-cell:odd {
@@ -39,23 +40,97 @@
 }
 
 .table-view .table-cell {
-    -fx-padding: 5 8;
+    -fx-padding: 3 6;
     -fx-border-color: transparent #e8eef4 transparent transparent;
 }
 
-/* Entradas de texto generales (TextField, PasswordField, TextArea) */
-.text-field, .password-field, .text-area {
+/* Entradas de texto y controles de formulario generales (TextField, PasswordField, TextArea, ComboBox, DatePicker) */
+.text-field, .password-field, .combo-box, .date-picker, .spinner {
     -fx-background-color: white;
     -fx-text-fill: #1a202c;
-    -fx-prompt-text-fill: #718096;
-    -fx-border-color: #cbd5e0;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
-    -fx-padding: 6 10;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 2.5px 6px;
+    -fx-font-size: 10px;
+    -fx-min-height: 24px;
+    -fx-pref-height: 26px;
 }
 
-.text-field:focused, .password-field:focused, .text-area:focused {
+.text-area {
+    -fx-background-color: white;
+    -fx-text-fill: #1a202c;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 3px 6px;
+    -fx-font-size: 10px;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #1a202c;
+    -fx-font-size: 10px;
+    -fx-padding: 2px 4px;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box:focused, .date-picker:focused {
     -fx-border-color: #3182ce;
+}
+
+/* Entradas en pantalla de Login: altas, cómodas y perfectamente alineadas */
+.login-field, .login-container .text-field {
+    -fx-font-size: 13.5px !important;
+    -fx-min-height: 42px !important;
+    -fx-pref-height: 42px !important;
+    -fx-max-height: 42px !important;
+    -fx-padding: 9px 14px !important;
+    -fx-background-radius: 6px !important;
+    -fx-border-radius: 6px !important;
+    -fx-border-color: #cbd5e1 !important;
+    -fx-background-color: white !important;
+    -fx-text-fill: #1e293b !important;
+    -fx-prompt-text-fill: #94a3b8 !important;
+    -fx-alignment: CENTER_LEFT !important;
+}
+
+.login-field:focused, .login-container .text-field:focused {
+    -fx-border-color: #0F3E6E !important;
+    -fx-border-width: 1.5px !important;
+}
+
+.login-field-password, .login-container .password-field {
+    -fx-font-size: 13.5px !important;
+    -fx-min-height: 42px !important;
+    -fx-pref-height: 42px !important;
+    -fx-max-height: 42px !important;
+    -fx-padding: 9px 42px 9px 14px !important;
+    -fx-background-radius: 6px !important;
+    -fx-border-radius: 6px !important;
+    -fx-border-color: #cbd5e1 !important;
+    -fx-background-color: white !important;
+    -fx-text-fill: #1e293b !important;
+    -fx-prompt-text-fill: #94a3b8 !important;
+    -fx-alignment: CENTER_LEFT !important;
+}
+
+.login-field-password:focused, .login-container .password-field:focused {
+    -fx-border-color: #0F3E6E !important;
+    -fx-border-width: 1.5px !important;
+}
+
+/* Títulos y etiquetas de campos en formularios (visiblemente más pequeños y elegantes) */
+.form-label, .field-label, .input-title, .form-title-label {
+    -fx-font-size: 9.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+}
+
+.form-section-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
 }
 
 /* Inputs en cabeceras o contenedores oscuros */
@@ -119,33 +194,37 @@
 .dialog-root .combo-box,
 .dialog-root .date-picker {
     -fx-background-color: white;
-    -fx-text-fill: #2d3748;
-    -fx-prompt-text-fill: #a0aec0;
-    -fx-border-color: #cbd5e0;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
-    -fx-padding: 4 6;
-    -fx-font-size: 11px;
+    -fx-text-fill: #1a202c;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 2.5px 6px;
+    -fx-font-size: 10px;
+    -fx-min-height: 24px;
+    -fx-pref-height: 26px;
 }
 
 .dialog-root .combo-box .list-cell {
-    -fx-text-fill: #2d3748;
+    -fx-text-fill: #1a202c;
+    -fx-font-size: 10px;
 }
 
 .dialog-root .text-field:focused,
 .dialog-root .combo-box:focused,
 .dialog-root .date-picker:focused {
-    -fx-border-color: #4299e1;
+    -fx-border-color: #3182ce;
 }
 
 .dialog-root .label {
-    -fx-text-fill: #4a5568;
-    -fx-font-size: 11px;
+    -fx-text-fill: #475569;
+    -fx-font-size: 9.5px;
 }
 
 .dialog-root .button {
-    -fx-font-size: 11px;
-    -fx-padding: 6 12;
+    -fx-font-size: 10px;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 4px;
 }
 
 /* Custom TabPane for Pallets Detail & Resumen */

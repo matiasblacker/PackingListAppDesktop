@@ -60,8 +60,8 @@ public class CarriersDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Gestión de Transportistas y Couriers");
 
-        setMinWidth(900);
-        setMinHeight(600);
+        setMinWidth(850);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -244,12 +244,9 @@ public class CarriersDialog extends Stage {
 
         root.getChildren().addAll(headerBox, mainSplit, actionRow);
 
-        Scene scene = new Scene(root, 1080, 680);
-        try {
-            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        } catch (Exception ignored) {}
-
+        Scene scene = new Scene(root, 1080, 640);
         setScene(scene);
+        com.logistics.packinglist.utils.ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 850, 520);
     }
 
     private void cargarDatos() {
@@ -353,7 +350,8 @@ public class CarriersDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lbl.getStyleClass().add("form-label");
+        lbl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         return lbl;
     }
 }

@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.poi.ss.usermodel.*;
@@ -102,8 +103,8 @@ public class NotasPedidoDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Gestión de Notas de Pedido (WMS)");
 
-        setMinWidth(1280);
-        setMinHeight(750);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -149,12 +150,12 @@ public class NotasPedidoDialog extends Stage {
 
         txtSearch = new TextField();
         txtSearch.setPromptText("Filtrar por folio o cliente...");
-        txtSearch.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtSearch.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtSearch.setMaxWidth(180);
 
         cbFiltroEstado = new ComboBox<>(FXCollections.observableArrayList("Todos", "Pendientes", "Confirmadas", "Completadas", "Anuladas"));
         cbFiltroEstado.setValue("Todos");
-        cbFiltroEstado.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbFiltroEstado.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px; -fx-border-radius: 4px;");
 
         // Helper to update filtered list
         Runnable updateFiltros = () -> {
@@ -290,7 +291,7 @@ public class NotasPedidoDialog extends Stage {
 
         cbDeposito = new ComboBox<>();
         cbDeposito.setPromptText("Seleccione Depósito");
-        cbDeposito.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbDeposito.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbDeposito.setMaxWidth(Double.MAX_VALUE);
         cbDeposito.valueProperty().addListener((obs, oldVal, newVal) -> {
             cbBodega.getItems().clear();
@@ -313,17 +314,17 @@ public class NotasPedidoDialog extends Stage {
 
         cbBodega = new ComboBox<>();
         cbBodega.setPromptText("Seleccione Bodega");
-        cbBodega.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbBodega.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbBodega.setMaxWidth(Double.MAX_VALUE);
 
         txtFolio = new TextField();
         txtFolio.setPromptText("Folio del pedido (Ej: NP-1002)");
-        txtFolio.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtFolio.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtFolio.setMaxWidth(Double.MAX_VALUE);
 
         cbCliente = new AutocompleteComboBox<>();
         cbCliente.setPromptText("Seleccione Cliente");
-        cbCliente.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbCliente.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbCliente.setMaxWidth(Double.MAX_VALUE);
         cbCliente.setFilterPredicate((c, text) -> {
             return (c.getRazonSocial() != null && c.getRazonSocial().toLowerCase().contains(text))
@@ -334,7 +335,7 @@ public class NotasPedidoDialog extends Stage {
         cbEstado = new ComboBox<>();
         cbEstado.getItems().addAll("PENDIENTE", "CONFIRMADA", "COMPLETADA", "ANULADA");
         cbEstado.setValue("PENDIENTE");
-        cbEstado.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbEstado.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbEstado.setMaxWidth(Double.MAX_VALUE);
         cbEstado.valueProperty().addListener((obs, oldVal, newVal) -> {
             // No auto-bloquear la UI solo por cambiar el select. El bloqueo real 
@@ -344,25 +345,25 @@ public class NotasPedidoDialog extends Stage {
         cbZonaReserva = new ComboBox<>();
         cbZonaReserva.getItems().addAll("COMERCIAL", "PRIMARIA");
         cbZonaReserva.setValue("COMERCIAL");
-        cbZonaReserva.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbZonaReserva.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbZonaReserva.setMaxWidth(Double.MAX_VALUE);
 
         Label lblDeposito = new Label("Depósito:");
-        lblDeposito.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblDeposito.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblBodega = new Label("Bodega:");
-        lblBodega.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblBodega.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblFolioNP = new Label("Folio NP:");
-        lblFolioNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblFolioNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblClienteNP = new Label("Cliente:");
-        lblClienteNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblClienteNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblEstadoNP = new Label("Estado:");
-        lblEstadoNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblEstadoNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblZonaNP = new Label("Zona Reserva:");
-        lblZonaNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblZonaNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblProvNP = new Label("Proveedor:");
-        lblProvNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblProvNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblOCNP = new Label("N° Orden Compra:");
-        lblOCNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblOCNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         formGrid.add(lblDeposito, 0, 0);
         formGrid.add(cbDeposito, 1, 0);
@@ -385,12 +386,12 @@ public class NotasPedidoDialog extends Stage {
 
         txtOrdenCompra = new TextField();
         txtOrdenCompra.setPromptText("N° Orden Compra");
-        txtOrdenCompra.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtOrdenCompra.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtOrdenCompra.setMaxWidth(Double.MAX_VALUE);
 
         cbProveedor = new AutocompleteComboBox<>();
         cbProveedor.setPromptText("Seleccione Proveedor");
-        cbProveedor.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbProveedor.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbProveedor.setMaxWidth(Double.MAX_VALUE);
         cbProveedor.setFilterPredicate((s, text) -> {
             return (s.getRazonSocial() != null && s.getRazonSocial().toLowerCase().contains(text))
@@ -473,7 +474,7 @@ public class NotasPedidoDialog extends Stage {
 
         cbProducto = new AutocompleteComboBox<>();
         cbProducto.setPromptText("Seleccione Producto...");
-        cbProducto.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cbProducto.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px; -fx-border-radius: 4px;");
         cbProducto.setPrefWidth(250);
         cbProducto.setDisable(true);
         cbProducto.setFilterPredicate((p, text) -> {
@@ -486,7 +487,7 @@ public class NotasPedidoDialog extends Stage {
         });
 
         lblProductSupplierWarning = new Label("Debe seleccionar un proveedor antes de agregar productos.");
-        lblProductSupplierWarning.setStyle("-fx-text-fill: #e53e3e; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblProductSupplierWarning.setStyle("-fx-text-fill: #e53e3e; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         lblProductSupplierWarning.setVisible(true);
         lblProductSupplierWarning.setManaged(true);
 
@@ -521,7 +522,7 @@ public class NotasPedidoDialog extends Stage {
 
         txtCantidad = new TextField();
         txtCantidad.setPromptText("Cant.");
-        txtCantidad.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtCantidad.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
         txtCantidad.setPrefWidth(60);
 
         FontAwesomeIconView iconAdd = new FontAwesomeIconView(FontAwesomeIcon.PLUS);
@@ -549,14 +550,15 @@ public class NotasPedidoDialog extends Stage {
         btnExtrasLinea.setOnAction(e -> abrirExtrasLinea());
 
         Label lblProd = new Label("Prod:");
-        lblProd.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblProd.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblCant = new Label("Cant:");
-        lblCant.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lblCant.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         lineInputRow.getChildren().addAll(lblProd, cbProducto, lblCant, txtCantidad, btnAddLine, btnDelLine, btnExcel, btnExtrasLinea);
 
         tablaDetalles = new TableView<>(detailList);
         tablaDetalles.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tablaDetalles.setMinHeight(140);
         tablaDetalles.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
         TableColumn<OrderNoteDetailModel, String> colLineSku = new TableColumn<>("SKU");
@@ -825,13 +827,14 @@ public class NotasPedidoDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1280, 750);
+        Scene scene = new Scene(root, 1200, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1200, 640, 950, 520);
     }
 
     private void refrescarComboboxProducto() {
@@ -1627,6 +1630,7 @@ public class NotasPedidoDialog extends Stage {
                 ex.printStackTrace();
             }
             setScene(scene);
+            ScreenUtil.fitDialogToScreen(this, getOwner(), 450, 480, 400, 380);
         }
 
         private void refreshList() {

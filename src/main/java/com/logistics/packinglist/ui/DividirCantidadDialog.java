@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class DividirCantidadDialog extends Stage {
         divBox.setStyle("-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 6px; -fx-border-color: #e2e8f0;");
 
         Label lblPartes = new Label("N° de Partes Equitativas:");
-        lblPartes.setStyle("-fx-font-weight: bold; -fx-text-fill: #1e293b;");
+        lblPartes.setStyle("-fx-font-weight: bold; -fx-text-fill: #475569; -fx-font-size: 9.5px;");
 
         spnPartes = new Spinner<>(2, 20, 2);
         spnPartes.setPrefWidth(80);
@@ -196,11 +197,12 @@ public class DividirCantidadDialog extends Stage {
 
         root.getChildren().addAll(headerBox, divBox, tblSplits, footer);
 
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, 650, 480);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception ignored) {}
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 650, 480, 600, 420);
     }
 
     private void generarParticionEquitativa(int numPartes) {

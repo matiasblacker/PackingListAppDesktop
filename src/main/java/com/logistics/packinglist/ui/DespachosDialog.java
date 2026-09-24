@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import javafx.util.converter.IntegerStringConverter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -70,8 +71,8 @@ public class DespachosDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Gestión de Despachos (WMS)");
 
-        setMinWidth(1100);
-        setMinHeight(650);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -225,42 +226,42 @@ public class DespachosDialog extends Stage {
 
         txtGuia = new TextField();
         txtGuia.setPromptText("Nº de Guía de Despacho (Opcional si hay Factura)");
-        txtGuia.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtGuia.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtGuia.setMaxWidth(Double.MAX_VALUE);
 
         txtFactura = new TextField();
         txtFactura.setPromptText("Nº de Factura (Opcional si hay Guía)");
-        txtFactura.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtFactura.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtFactura.setMaxWidth(Double.MAX_VALUE);
 
         txtTransportista = new TextField();
         txtTransportista.setPromptText("Nombre del chofer / Courier");
-        txtTransportista.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtTransportista.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtTransportista.setMaxWidth(Double.MAX_VALUE);
 
         txtPatente = new TextField();
         txtPatente.setPromptText("Ej: ABCD-12 o AB-1234");
-        txtPatente.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtPatente.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtPatente.setMaxWidth(Double.MAX_VALUE);
 
         txtComentario = new TextArea();
         txtComentario.setPromptText("Comentarios adicionales sobre el despacho...");
         txtComentario.setPrefRowCount(2);
-        txtComentario.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtComentario.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtComentario.setMaxWidth(Double.MAX_VALUE);
 
         Label lblNP = new Label("Nota Pedido:");
-        lblNP.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblNP.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblGuia = new Label("Guía Despacho:");
-        lblGuia.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblGuia.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblFactura = new Label("Factura:");
-        lblFactura.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblFactura.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblTrans = new Label("Chofer / Transp:");
-        lblTrans.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblTrans.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblPat = new Label("Patente:");
-        lblPat.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblPat.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblComentario = new Label("Comentario:");
-        lblComentario.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblComentario.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         formGrid.add(lblNP, 0, 0);
         formGrid.add(lblNPSelected, 1, 0);
@@ -309,7 +310,7 @@ public class DespachosDialog extends Stage {
         VBox.setVgrow(tablaItems, Priority.ALWAYS);
 
         Label lblHelp = new Label("Indica la cantidad a despachar en cada fila (Doble Clic para editar):");
-        lblHelp.setStyle("-fx-text-fill: #64748b; -fx-font-size: 11px;");
+        lblHelp.setStyle("-fx-text-fill: #64748b; -fx-font-size: 9.5px;");
 
         detailBox.getChildren().addAll(lblHelp, tablaItems);
 
@@ -430,13 +431,14 @@ public class DespachosDialog extends Stage {
             }
         });
 
-        Scene scene = new Scene(root, 1100, 650);
+        Scene scene = new Scene(root, 1080, 620);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 620, 950, 520);
     }
 
     private void cargarDatos() {

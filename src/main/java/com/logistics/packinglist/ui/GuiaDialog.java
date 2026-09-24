@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 public class GuiaDialog extends Stage {
     private final MantenimientoService service = MantenimientoService.getInstance();
@@ -18,9 +19,12 @@ public class GuiaDialog extends Stage {
 
     public GuiaDialog(Window owner) {
         setTitle("Guía de Usuario - PackingList APP");
+        if (owner != null) {
+            initOwner(owner);
+        }
         initModality(Modality.NONE);
         setMinWidth(700);
-        setMinHeight(600);
+        setMinHeight(480);
         
         // Root container con fondo moderno
         VBox root = new VBox(20);
@@ -111,11 +115,12 @@ public class GuiaDialog extends Stage {
 
         root.getChildren().addAll(header, new Separator(), scroll, new Separator(), bottom);
         
-        Scene scene = new Scene(root, 750, 650);
+        Scene scene = new Scene(root, 750, 560);
+        if (getClass().getResource("/styles.css") != null) {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        }
         setScene(scene);
-        
-        // Centrar
-        centerOnScreen();
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 750, 560, 680, 480);
     }
 
     private TitledPane crearSeccion(String titulo, String icon, String descripcion, String comoHacerlo, String funcion, String resultado) {

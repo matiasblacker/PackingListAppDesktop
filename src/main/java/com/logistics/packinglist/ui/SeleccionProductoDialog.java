@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 
 public class SeleccionProductoDialog extends Stage {
     private final InventarioService service;
@@ -47,6 +48,7 @@ public class SeleccionProductoDialog extends Stage {
 
         TextField txtBusqueda = new TextField();
         txtBusqueda.setPromptText("Buscar producto...");
+        txtBusqueda.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtBusqueda.textProperty().addListener((obs, oldVal, newVal) -> {
             filtered.setPredicate(item -> {
                 if (newVal == null || newVal.isEmpty())
@@ -76,6 +78,7 @@ public class SeleccionProductoDialog extends Stage {
         TextField txtCantidad = new TextField();
         txtCantidad.setPromptText("Cant.");
         txtCantidad.setPrefWidth(80);
+        txtCantidad.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         // Only allow numbers
         txtCantidad.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -85,7 +88,7 @@ public class SeleccionProductoDialog extends Stage {
 
         Button btnAceptar = new Button("", new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.SAVE));
         btnAceptar.getStyleClass().add("btn-guardar");
-        btnAceptar.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-font-weight: bold;");
+        btnAceptar.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 12px;");
 
         Runnable accionAgregar = () -> {
             InventarioItem seleccionado = tabla.getSelectionModel().getSelectedItem();
@@ -120,13 +123,23 @@ public class SeleccionProductoDialog extends Stage {
             }
         });
 
-        HBox bottomBox = new HBox(10, new Label("Catidad:"), txtCantidad, btnAceptar);
+        Label lblCantidad = new Label("Cantidad:");
+        lblCantidad.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+
+        HBox bottomBox = new HBox(10, lblCantidad, txtCantidad, btnAceptar);
         bottomBox.setAlignment(Pos.CENTER_RIGHT);
 
-        root.getChildren().addAll(new Label("Buscar producto:"), txtBusqueda, tabla, bottomBox);
+        Label lblBuscar = new Label("Buscar producto:");
+        lblBuscar.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
 
-        Scene scene = new Scene(root, 600, 500);
+        root.getChildren().addAll(lblBuscar, txtBusqueda, tabla, bottomBox);
+
+        Scene scene = new Scene(root, 600, 480);
+        if (getClass().getResource("/styles.css") != null) {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 600, 480, 500, 400);
     }
 
     private void alerta(String msg) {

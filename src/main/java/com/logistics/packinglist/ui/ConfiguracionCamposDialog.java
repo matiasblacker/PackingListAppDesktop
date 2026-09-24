@@ -2,6 +2,7 @@ package com.logistics.packinglist.ui;
 
 import com.logistics.packinglist.model.ProductFieldDefinitionModel;
 import com.logistics.packinglist.service.MantenimientoService;
+import com.logistics.packinglist.utils.ScreenUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.property.SimpleStringProperty;
@@ -67,7 +68,7 @@ public class ConfiguracionCamposDialog extends Stage {
         setTitle("Configuración de Atributos - " + entityName);
 
         setMinWidth(840);
-        setMinHeight(600);
+        setMinHeight(480);
 
         construirUI(entityName);
         cargarCampos();
@@ -134,20 +135,20 @@ public class ConfiguracionCamposDialog extends Stage {
         txtLabel = new TextField();
         txtLabel.setPromptText("Ej: Commercial Invoice, Fecha Vencimiento");
         txtLabel.setPrefWidth(200);
-        txtLabel.setStyle("-fx-background-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtLabel.setStyle("-fx-background-radius: 4px; -fx-border-color: #cbd5e1; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
 
         cbType = new ComboBox<>();
         cbType.getItems().addAll("Texto", "Número", "Fecha", "Sí/No");
         cbType.setValue("Texto");
         cbType.setPrefWidth(110);
-        cbType.setStyle("-fx-background-radius: 4px;");
+        cbType.setStyle("-fx-background-radius: 4px; -fx-font-size: 10px;");
 
         chkRequired = new CheckBox("Requerido");
-        chkRequired.setStyle("-fx-font-weight: bold; -fx-text-fill: #334155;");
+        chkRequired.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #334155;");
 
         chkActive = new CheckBox("Activo");
         chkActive.setSelected(true);
-        chkActive.setStyle("-fx-font-weight: bold; -fx-text-fill: #0d6efd;");
+        chkActive.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #0d6efd;");
 
         // Botón Añadir / Guardar
         iconSave = new FontAwesomeIconView(FontAwesomeIcon.PLUS);
@@ -176,9 +177,14 @@ public class ConfiguracionCamposDialog extends Stage {
         HBox btnGroup = new HBox(6, btnSave, btnClear, btnDelete);
         btnGroup.setAlignment(Pos.CENTER_LEFT);
 
-        grid.add(new Label("Etiqueta:"), 0, 0);
+        Label lblEtiqueta = new Label("Etiqueta:");
+        lblEtiqueta.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblTipo = new Label("Tipo:");
+        lblTipo.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+
+        grid.add(lblEtiqueta, 0, 0);
         grid.add(txtLabel, 1, 0);
-        grid.add(new Label("Tipo:"), 2, 0);
+        grid.add(lblTipo, 2, 0);
         grid.add(cbType, 3, 0);
         grid.add(chkRequired, 4, 0);
         grid.add(chkActive, 5, 0);
@@ -186,12 +192,13 @@ public class ConfiguracionCamposDialog extends Stage {
 
         root.getChildren().addAll(header, tabla, grid);
 
-        Scene scene = new Scene(root, 840, 600);
+        Scene scene = new Scene(root, 840, 520);
 
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception ignored) {}
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 840, 520, 780, 480);
     }
 
     private void cargarCampos() {

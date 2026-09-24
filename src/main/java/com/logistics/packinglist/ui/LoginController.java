@@ -34,16 +34,17 @@ public class LoginController extends VBox {
     }
 
     private void construirUI() {
+        getStyleClass().add("login-container");
         setAlignment(Pos.CENTER);
-        setSpacing(15);
-        setPadding(new Insets(40));
+        setSpacing(14);
+        setPadding(new Insets(30, 35, 30, 35));
         setStyle("-fx-background-color: #f5f7fb;");
 
         // Logo
         ImageView imgLogo = new ImageView();
         try {
             imgLogo.setImage(new Image(getClass().getResourceAsStream("/icon.png")));
-            imgLogo.setFitHeight(100);
+            imgLogo.setFitHeight(95);
             imgLogo.setPreserveRatio(true);
         } catch (Exception e) {
             System.err.println("No se pudo cargar el logo del login: " + e.getMessage());
@@ -51,32 +52,40 @@ public class LoginController extends VBox {
 
         Label lblTitulo = new Label("Iniciar Sesión");
         lblTitulo.setStyle(
-                "-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #0F3E6E; -fx-padding: 10 0 20 0;");
+                "-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #0F3E6E; -fx-padding: 5 0 15 0;");
 
         TextField txtEmail = new TextField();
+        txtEmail.getStyleClass().add("login-field");
         txtEmail.setPromptText("Correo electrónico");
-        txtEmail.setStyle(
-                "-fx-font-size: 14px; -fx-padding: 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ccc;");
+        txtEmail.setPrefHeight(42);
+        txtEmail.setMinHeight(42);
+        txtEmail.setStyle("-fx-font-size: 13.5px; -fx-padding: 9px 14px; -fx-min-height: 42px; -fx-pref-height: 42px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-background-color: white; -fx-text-fill: #1e293b;");
 
         StackPane passwordContainer = new StackPane();
         passwordContainer.setAlignment(Pos.CENTER_RIGHT);
+        passwordContainer.setPrefHeight(42);
+        passwordContainer.setMinHeight(42);
 
         PasswordField txtPassword = new PasswordField();
+        txtPassword.getStyleClass().add("login-field-password");
         txtPassword.setPromptText("Contraseña");
-        txtPassword.setStyle(
-                "-fx-font-size: 14px; -fx-padding: 10 40 10 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ccc;");
+        txtPassword.setPrefHeight(42);
+        txtPassword.setMinHeight(42);
+        txtPassword.setStyle("-fx-font-size: 13.5px; -fx-padding: 9px 42px 9px 14px; -fx-min-height: 42px; -fx-pref-height: 42px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-background-color: white; -fx-text-fill: #1e293b;");
 
         TextField txtPasswordVisible = new TextField();
+        txtPasswordVisible.getStyleClass().add("login-field-password");
         txtPasswordVisible.setPromptText("Contraseña");
-        txtPasswordVisible.setStyle(
-                "-fx-font-size: 14px; -fx-padding: 10 40 10 10; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ccc;");
+        txtPasswordVisible.setPrefHeight(42);
+        txtPasswordVisible.setMinHeight(42);
+        txtPasswordVisible.setStyle("-fx-font-size: 13.5px; -fx-padding: 9px 42px 9px 14px; -fx-min-height: 42px; -fx-pref-height: 42px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-background-color: white; -fx-text-fill: #1e293b;");
         txtPasswordVisible.setVisible(false);
 
         // Bind bidirectionally to sync text
         txtPassword.textProperty().bindBidirectional(txtPasswordVisible.textProperty());
 
         Button btnTogglePassword = new Button();
-        btnTogglePassword.setStyle("-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0 10 0 0;");
+        btnTogglePassword.setStyle("-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0 12 0 0;");
         
         FontAwesomeIconView eyeIcon = new FontAwesomeIconView(FontAwesomeIcon.EYE_SLASH);
         eyeIcon.setSize("16px");
@@ -123,8 +132,10 @@ public class LoginController extends VBox {
 
         Button btnLogin = new Button("Iniciar sesión");
         btnLogin.setMaxWidth(Double.MAX_VALUE);
+        btnLogin.setPrefHeight(42);
+        btnLogin.setMinHeight(42);
         btnLogin.setStyle(
-                "-fx-background-color: #f7722aff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 10; -fx-background-radius: 5; -fx-cursor: hand;");
+                "-fx-background-color: #f7722aff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 10px; -fx-pref-height: 42px; -fx-min-height: 42px; -fx-background-radius: 6px; -fx-cursor: hand;");
 
         btnLogin.setOnAction(e -> {
             String email = txtEmail.getText();

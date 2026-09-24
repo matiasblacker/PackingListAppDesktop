@@ -24,6 +24,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.time.LocalDate;
@@ -98,8 +99,12 @@ public class ManualPackingDialog extends Stage {
         root.setCenter(construirPanelDerecho());
         root.setBottom(construirPie());
 
-        Scene scene = new Scene(root, 850, 550);
+        Scene scene = new Scene(root, 850, 540);
+        if (getClass().getResource("/styles.css") != null) {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 850, 540, 800, 480);
     }
 
     private Node construirCabecera() {
@@ -114,9 +119,12 @@ public class ManualPackingDialog extends Stage {
         txtFecha.setEditable(false);
         txtFecha.setStyle("-fx-background-color: #eee;");
 
-        box.getChildren().addAll(
-                new Label("Número de Orden:"), txtOrden,
-                new Label("Fecha:"), txtFecha);
+        Label lblNumOrden = new Label("Número de Orden:");
+        lblNumOrden.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblFechaTit = new Label("Fecha:");
+        lblFechaTit.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+
+        box.getChildren().addAll(lblNumOrden, txtOrden, lblFechaTit, txtFecha);
         return box;
     }
 
@@ -228,19 +236,32 @@ public class ManualPackingDialog extends Stage {
         Button btnReplicar = new Button("Replicar");
         btnReplicar.setOnAction(e -> replicarBultoActual());
         
-        grid.add(new Label("Tipo:"), 0, 0);
+        Label lblTipo = new Label("Tipo:");
+        lblTipo.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblVol = new Label("Volumen:");
+        lblVol.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblPesos = new Label("Pesos:");
+        lblPesos.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblBruto = new Label("Bruto:");
+        lblBruto.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblNeto = new Label("Neto:");
+        lblNeto.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        Label lblObs = new Label("Observaciones:");
+        lblObs.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+
+        grid.add(lblTipo, 0, 0);
         grid.add(new HBox(10, cmbTipo, btnReplicar), 1, 0);
         HBox dims = new HBox(5, txtLargo, new Label("x"), txtAncho, new Label("x"), txtAlto, new Label("cm"));
         dims.setAlignment(Pos.CENTER_LEFT);
-        grid.add(new Label("Volumen:"), 0, 1);
+        grid.add(lblVol, 0, 1);
         grid.add(dims, 1, 1);
 
-        HBox pesos = new HBox(10, new Label("Bruto:"), txtPesoBruto, new Label("Neto:"), txtPesoNeto, new Label("kg"));
+        HBox pesos = new HBox(10, lblBruto, txtPesoBruto, lblNeto, txtPesoNeto, new Label("kg"));
         pesos.setAlignment(Pos.CENTER_LEFT);
-        grid.add(new Label("Pesos:"), 0, 2);
+        grid.add(lblPesos, 0, 2);
         grid.add(pesos, 1, 2);
 
-        grid.add(new Label("Observaciones:"), 0, 3);
+        grid.add(lblObs, 0, 3);
         grid.add(txtObservaciones, 1, 3);
 
         // Tabla Items

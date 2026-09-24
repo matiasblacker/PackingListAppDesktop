@@ -17,6 +17,7 @@ import com.logistics.packinglist.model.ProductFieldDefinitionModel;
 import java.io.File;
 import com.logistics.packinglist.model.SupplierModel;
 import com.logistics.packinglist.service.WebSocketManager;
+import com.logistics.packinglist.utils.ScreenUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.property.SimpleStringProperty;
@@ -93,8 +94,8 @@ public class RecepcionesDialog extends Stage {
                         initOwner(owner);
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Recepciones de Carga");
-        setMinWidth(1010);
-        setMinHeight(650);
+        setMinWidth(950);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -232,38 +233,38 @@ public class RecepcionesDialog extends Stage {
 
         cbBodega = new ComboBox<>();
         cbBodega.setPromptText("Seleccione Bodega");
-        cbBodega.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbBodega.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbBodega.setMaxWidth(Double.MAX_VALUE);
         cbBodega.setOnAction(e -> cargarAnunciosYLocationsDeBodega());
 
         cbAnuncio = new ComboBox<>();
         cbAnuncio.setPromptText("Seleccione Anuncio de Carga");
-        cbAnuncio.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbAnuncio.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbAnuncio.setMaxWidth(Double.MAX_VALUE);
         cbAnuncio.setOnAction(e -> cargarItemsDeAnuncio());
 
         txtNumeroBl = new TextField();
         txtNumeroBl.setPromptText("N° BL (Auto)");
         txtNumeroBl.setEditable(false);
-        txtNumeroBl.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
+        txtNumeroBl.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
 
         txtOrdenCompra = new TextField();
         txtOrdenCompra.setPromptText("Orden Compra (Auto)");
         txtOrdenCompra.setEditable(false);
-        txtOrdenCompra.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
+        txtOrdenCompra.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
 
         cbTipoDocumento = new ComboBox<>(FXCollections.observableArrayList("Guía de Despacho", "Factura", "DUS", "Sin Documento", "Otro"));
         cbTipoDocumento.setValue("Guía de Despacho");
-        cbTipoDocumento.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbTipoDocumento.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbTipoDocumento.setMaxWidth(Double.MAX_VALUE);
 
         txtNumeroDocumento = new TextField();
         txtNumeroDocumento.setPromptText("N° Documento (Ej: 12345)");
-        txtNumeroDocumento.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
+        txtNumeroDocumento.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1;");
 
         cbZonaDestino = new ComboBox<>(FXCollections.observableArrayList("COMERCIAL", "PRIMARIA"));
         cbZonaDestino.setValue("COMERCIAL");
-        cbZonaDestino.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbZonaDestino.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbZonaDestino.setMaxWidth(Double.MAX_VALUE);
         cbZonaDestino.setOnAction(e -> {
             actualizarFiltroZonas();
@@ -272,26 +273,26 @@ public class RecepcionesDialog extends Stage {
 
         txtObservaciones = new TextArea();
         txtObservaciones.setPromptText("Observaciones...");
-        txtObservaciones.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtObservaciones.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtObservaciones.setPrefHeight(36);
         txtObservaciones.setMaxWidth(Double.MAX_VALUE);
 
         Label lblBod = new Label("Bodega:");
-        lblBod.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblBod.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblAnun = new Label("Anuncio:");
-        lblAnun.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblAnun.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblBl = new Label("N° BL:");
-        lblBl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblBl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblOc = new Label("Orden Compra:");
-        lblOc.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblOc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblTipoDoc = new Label("Tipo Doc:");
-        lblTipoDoc.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblTipoDoc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblNumDoc = new Label("N° Doc:");
-        lblNumDoc.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblNumDoc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblZona = new Label("Zona Destino:");
-        lblZona.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblZona.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblObs = new Label("Observaciones:");
-        lblObs.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblObs.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         // Fila 0: Bodega (col 0,1) | Anuncio (col 2,3)
         formGrid.add(lblBod, 0, 0);
@@ -312,18 +313,18 @@ public class RecepcionesDialog extends Stage {
         formGrid.add(txtNumeroDocumento, 3, 2);
 
         chkEsContenedor = new CheckBox("Contenedor");
-        chkEsContenedor.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #334155;");
+        chkEsContenedor.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
         chkEsContenedor.setDisable(true);
 
         txtNumeroContenedor = new TextField();
         txtNumeroContenedor.setPromptText("N° Contenedor");
         txtNumeroContenedor.setEditable(false);
-        txtNumeroContenedor.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
+        txtNumeroContenedor.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
 
         txtDigitoContenedor = new TextField();
         txtDigitoContenedor.setPromptText("DV");
         txtDigitoContenedor.setEditable(false);
-        txtDigitoContenedor.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
+        txtDigitoContenedor.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-background-color: #f1f5f9;");
         txtDigitoContenedor.setPrefWidth(45);
 
         HBox containerBox = new HBox(6, chkEsContenedor, txtNumeroContenedor, txtDigitoContenedor);
@@ -361,8 +362,8 @@ public class RecepcionesDialog extends Stage {
 
         tblItems = new TableView<>();
         tblItems.setItems(receptionRows);
-        tblItems.setMinHeight(240);
-        tblItems.setPrefHeight(280);
+        tblItems.setMinHeight(160);
+        tblItems.setPrefHeight(200);
         tblItems.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tblItems.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
 
@@ -421,21 +422,21 @@ public class RecepcionesDialog extends Stage {
 
         txtCantRecibida = new TextField();
         txtCantRecibida.setPromptText("Cant. Recibida");
-        txtCantRecibida.setStyle("-fx-font-size: 11px; -fx-padding: 3px 6px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtCantRecibida.setStyle("-fx-font-size: 10px; -fx-padding: 2.5px 5px; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
         txtCantRecibida.setMaxWidth(Double.MAX_VALUE);
 
         chkUbicacionExistente = new CheckBox("Con Stock Previo");
-        chkUbicacionExistente.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #334155;");
+        chkUbicacionExistente.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
 
         cbUbicacionExistente = new ComboBox<>();
         cbUbicacionExistente.setPromptText("Ubicación Existente (Stock)");
-        cbUbicacionExistente.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbUbicacionExistente.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbUbicacionExistente.setMaxWidth(Double.MAX_VALUE);
         cbUbicacionExistente.setDisable(true);
 
         cbZonaFisica = new ComboBox<>();
         cbZonaFisica.setPromptText("Todas las zonas...");
-        cbZonaFisica.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbZonaFisica.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbZonaFisica.setMaxWidth(Double.MAX_VALUE);
         configurarComboBoxSearchGeneric(cbZonaFisica, filteredZones);
         cbZonaFisica.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -444,7 +445,7 @@ public class RecepcionesDialog extends Stage {
 
         cbUbicacion = new ComboBox<>();
         cbUbicacion.setPromptText("Nueva Ubicación (WH)");
-        cbUbicacion.setStyle("-fx-font-size: 11px; -fx-background-radius: 4px;");
+        cbUbicacion.setStyle("-fx-font-size: 10px; -fx-background-radius: 4px;");
         cbUbicacion.setMaxWidth(Double.MAX_VALUE);
         configurarComboBoxSearchGeneric(cbUbicacion, filteredLocationItems);
 
@@ -457,11 +458,11 @@ public class RecepcionesDialog extends Stage {
         btnApplyItem.setOnAction(e -> actualizarFilaItem());
 
         Label lblCantRec = new Label("Cant. Recibida:");
-        lblCantRec.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblCantRec.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblZonaFis = new Label("Zona/Sector:");
-        lblZonaFis.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblZonaFis.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         Label lblAsignLoc = new Label("Asignar Ubicación:");
-        lblAsignLoc.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold; -fx-font-size: 11px;");
+        lblAsignLoc.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
 
         itemModifyGrid.add(lblCantRec, 0, 0);
         itemModifyGrid.add(txtCantRecibida, 1, 0);
@@ -593,13 +594,14 @@ public class RecepcionesDialog extends Stage {
 
         root.getChildren().addAll(headerBox, mainSplit, actionButtons);
 
-        Scene scene = new Scene(root, 1080, 680);
+        Scene scene = new Scene(root, 1080, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 950, 520);
     }
 
     private void cargarDatos() {
@@ -1428,7 +1430,7 @@ public class RecepcionesDialog extends Stage {
             VBox box = new VBox(2);
             String labelText = (f.getFieldLabel() != null ? f.getFieldLabel() : f.getFieldKey());
             Label lbl = new Label(labelText + (f.isRequired() ? " *" : ""));
-            lbl.setStyle(f.isRequired() ? "-fx-font-size: 11px; -fx-text-fill: #dc2626; -fx-font-weight: bold;" : "-fx-font-size: 11px; -fx-text-fill: #475569;");
+            lbl.setStyle(f.isRequired() ? "-fx-font-size: 9.5px; -fx-text-fill: #dc2626; -fx-font-weight: bold;" : "-fx-font-size: 9.5px; -fx-text-fill: #475569;");
 
             String t = f.getFieldType() != null ? f.getFieldType().toUpperCase() : "TEXT";
             Control ctrl;
@@ -1465,7 +1467,7 @@ public class RecepcionesDialog extends Stage {
             VBox box = new VBox(2);
             String labelText = (f.getFieldLabel() != null ? f.getFieldLabel() : f.getFieldKey());
             Label lbl = new Label(labelText + (f.isRequired() ? " *" : ""));
-            lbl.setStyle(f.isRequired() ? "-fx-font-size: 11px; -fx-text-fill: #dc2626; -fx-font-weight: bold;" : "-fx-font-size: 11px; -fx-text-fill: #475569;");
+            lbl.setStyle(f.isRequired() ? "-fx-font-size: 9.5px; -fx-text-fill: #dc2626; -fx-font-weight: bold;" : "-fx-font-size: 9.5px; -fx-text-fill: #475569;");
 
             String t = f.getFieldType() != null ? f.getFieldType().toUpperCase() : "TEXT";
             Control ctrl;

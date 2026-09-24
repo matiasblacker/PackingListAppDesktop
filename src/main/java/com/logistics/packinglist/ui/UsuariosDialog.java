@@ -19,6 +19,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.paint.Color;
@@ -74,10 +75,13 @@ public class UsuariosDialog extends Stage {
         this.isAdminSis = "ADMINSIS".equalsIgnoreCase(AuthService.getInstance().getRole());
 
         initModality(Modality.APPLICATION_MODAL);
+        if (owner != null) {
+            initOwner(owner);
+        }
         setTitle("Gestión de Usuarios y Roles");
 
         setMinWidth(950);
-        setMinHeight(600);
+        setMinHeight(520);
 
         construirUI();
         cargarDatos();
@@ -102,7 +106,7 @@ public class UsuariosDialog extends Stage {
         // Top toolbar
         txtBusqueda = new TextField();
         txtBusqueda.setPromptText("Buscar por Nombre, Apellido o Email...");
-        txtBusqueda.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1;");
+        txtBusqueda.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtBusqueda.setPrefWidth(300);
         txtBusqueda.textProperty().addListener((obs, oldVal, newVal) -> {
             filteredList.setPredicate(u -> {
@@ -114,7 +118,9 @@ public class UsuariosDialog extends Stage {
             });
         });
 
-        HBox topRow = new HBox(10, new Label("Buscar:"), txtBusqueda);
+        Label lblBuscar = new Label("Buscar:");
+        lblBuscar.setStyle("-fx-font-size: 9.5px; -fx-font-weight: bold; -fx-text-fill: #475569;");
+        HBox topRow = new HBox(10, lblBuscar, txtBusqueda);
         topRow.setAlignment(Pos.CENTER_LEFT);
 
         // Tabla
@@ -164,23 +170,23 @@ public class UsuariosDialog extends Stage {
 
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre");
-        txtNombre.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtNombre.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtNombre.setMaxWidth(Double.MAX_VALUE);
 
         txtApellido = new TextField();
         txtApellido.setPromptText("Apellido");
-        txtApellido.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtApellido.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtApellido.setMaxWidth(Double.MAX_VALUE);
 
         txtEmail = new TextField();
         txtEmail.setPromptText("Correo Electrónico");
-        txtEmail.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtEmail.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtEmail.setMaxWidth(Double.MAX_VALUE);
 
         lblPassword = crearLabel("Contraseña:");
         txtPassword = new PasswordField();
         txtPassword.setPromptText("Mínimo 6 caracteres");
-        txtPassword.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a;");
+        txtPassword.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-color: #cbd5e1; -fx-text-fill: #0f172a; -fx-font-size: 10px; -fx-padding: 2.5px 5px;");
         txtPassword.setMaxWidth(Double.MAX_VALUE);
 
         cmbRol = new ComboBox<>();
@@ -194,29 +200,29 @@ public class UsuariosDialog extends Stage {
         roles.add("GESTOR_COMERCIAL");
         cmbRol.setItems(FXCollections.observableArrayList(roles));
         cmbRol.setPromptText("Seleccione Rol...");
-        cmbRol.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cmbRol.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbRol.setMaxWidth(Double.MAX_VALUE);
 
         lblEstado = crearLabel("Estado:");
         cmbEstado = new ComboBox<>(FXCollections.observableArrayList("ACTIVO", "INACTIVO"));
         cmbEstado.setValue("ACTIVO");
-        cmbEstado.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cmbEstado.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbEstado.setMaxWidth(Double.MAX_VALUE);
 
         cmbEmpresa = new ComboBox<>(companiesList);
         cmbEmpresa.setPromptText("Seleccione Empresa...");
-        cmbEmpresa.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cmbEmpresa.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbEmpresa.setMaxWidth(Double.MAX_VALUE);
         lblEmpresa = crearLabel("Empresa:");
 
         cmbDeposito = new ComboBox<>();
         cmbDeposito.setPromptText("Seleccione Depósito...");
-        cmbDeposito.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px; -fx-font-size: 11px;");
+        cmbDeposito.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbDeposito.setMaxWidth(Double.MAX_VALUE);
 
         cmbBodega = new ComboBox<>(filteredWarehouses);
         cmbBodega.setPromptText("Seleccione Bodega...");
-        cmbBodega.setStyle("-fx-background-radius: 6px; -fx-border-radius: 6px;");
+        cmbBodega.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbBodega.setMaxWidth(Double.MAX_VALUE);
 
         cmbEmpresa.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -390,8 +396,12 @@ public class UsuariosDialog extends Stage {
 
         root.getChildren().addAll(headerBox, mainSplit, actionRow);
 
-        Scene scene = new Scene(root, 1080, 680);
+        Scene scene = new Scene(root, 1080, 640);
+        if (getClass().getResource("/styles.css") != null) {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1080, 640, 950, 520);
     }
 
     private void cargarDatos() {
@@ -594,7 +604,7 @@ public class UsuariosDialog extends Stage {
 
     private Label crearLabel(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-text-fill: #334155; -fx-font-weight: bold;");
+        lbl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         return lbl;
     }
 }

@@ -34,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import com.logistics.packinglist.utils.ScreenUtil;
 import javafx.util.converter.IntegerStringConverter;
 import java.util.List;
 import java.util.UUID;
@@ -90,8 +91,8 @@ public class PackingListDialog extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle("Picking & Packing NP (WMS)");
 
-        setMinWidth(1280);
-        setMinHeight(750);
+        setMinWidth(950);
+        setMinHeight(540);
 
         construirUI();
 
@@ -210,7 +211,7 @@ public class PackingListDialog extends Stage {
                     setGraphic(null);
                 } else {
                     Label lbl = new Label();
-                    lbl.setStyle("-fx-font-weight: bold; -fx-font-size: 11px;");
+                    lbl.setStyle("-fx-font-weight: bold; -fx-font-size: 9.5px;");
                     if (item) {
                         lbl.setText("⚠ Cambios sin revisar");
                         lbl.setStyle(lbl.getStyle() + " -fx-text-fill: #ea580c;");
@@ -490,20 +491,28 @@ public class PackingListDialog extends Stage {
         Button btnReplicar = new Button("Replicar");
         btnReplicar.setOnAction(e -> replicarBultoActual());
 
-        gridBulto.add(new Label("Tipo:"), 0, 0);
+        Label lblTipo = new Label("Tipo:");
+        lblTipo.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        gridBulto.add(lblTipo, 0, 0);
         gridBulto.add(new HBox(10, cmbTipo, btnReplicar), 1, 0);
         HBox dimsBox = new HBox(5, txtLargo, new Label("x"), txtAncho, new Label("x"), txtAlto, new Label("cm"));
         dimsBox.setAlignment(Pos.CENTER_LEFT);
-        gridBulto.add(new Label("Dimensiones:"), 0, 1);
+        Label lblDims = new Label("Dimensiones:");
+        lblDims.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        gridBulto.add(lblDims, 0, 1);
         gridBulto.add(dimsBox, 1, 1);
 
         HBox pesosBox = new HBox(10, new Label("Bruto:"), txtPesoBruto, new Label("Neto:"), txtPesoNeto,
                 new Label("kg"));
         pesosBox.setAlignment(Pos.CENTER_LEFT);
-        gridBulto.add(new Label("Pesos:"), 0, 2);
+        Label lblPesos = new Label("Pesos:");
+        lblPesos.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        gridBulto.add(lblPesos, 0, 2);
         gridBulto.add(pesosBox, 1, 2);
 
-        gridBulto.add(new Label("Observaciones:"), 0, 3);
+        Label lblObs = new Label("Observaciones:");
+        lblObs.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
+        gridBulto.add(lblObs, 0, 3);
         gridBulto.add(txtObservaciones, 1, 3);
 
         // Table of items in Bulto
@@ -600,7 +609,7 @@ public class PackingListDialog extends Stage {
         HBox photoHeader = new HBox(10);
         photoHeader.setAlignment(Pos.CENTER_LEFT);
         lblPhotoCount = new Label("Fotos Evidencia (0/6):");
-        lblPhotoCount.setStyle("-fx-font-weight: bold; -fx-font-size: 11px;");
+        lblPhotoCount.setStyle("-fx-font-weight: bold; -fx-font-size: 9.5px;");
         Button btnAddPhoto = new Button("Adjuntar Fotos", new FontAwesomeIconView(FontAwesomeIcon.CAMERA));
         btnAddPhoto.setStyle("-fx-background-color: #319795; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;");
         btnAddPhoto.setOnAction(e -> adjuntarFotos());
@@ -629,13 +638,14 @@ public class PackingListDialog extends Stage {
         mainSplit.getItems().addAll(tabPaneLeft, rightPane);
         mainSplit.setDividerPositions(0.40);
 
-        Scene scene = new Scene(mainSplit, 1280, 750);
+        Scene scene = new Scene(mainSplit, 1200, 640);
         try {
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
         setScene(scene);
+        ScreenUtil.fitDialogToScreen(this, getOwner(), 1200, 640, 950, 540);
     }
 
     private void cargarNPs() {
