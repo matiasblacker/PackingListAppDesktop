@@ -301,28 +301,29 @@ public class UbicacionesDialog extends Stage {
         FontAwesomeIconView iconSaveLoc = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconSaveLoc.setFill(Color.WHITE);
         btnGuardarLoc = new Button("", iconSaveLoc);
-        btnGuardarLoc.setStyle("-fx-background-color: cornflowerblue; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnGuardarLoc.getStyleClass().addAll("btn-action-sm", "btn-action-sm-save");
         btnGuardarLoc.setOnAction(e -> guardarUbicacion());
-        Tooltip.install(btnGuardarLoc, new Tooltip("Guardar Ubicación"));
+        Tooltip.install(btnGuardarLoc, new Tooltip("Guardar"));
 
-        FontAwesomeIconView iconClearLoc = new FontAwesomeIconView(FontAwesomeIcon.UNDO);
+        FontAwesomeIconView iconClearLoc = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
         iconClearLoc.setFill(Color.WHITE);
         btnLimpiarLoc = new Button("", iconClearLoc);
-        btnLimpiarLoc.setStyle("-fx-background-color: #6c757d; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnLimpiarLoc.getStyleClass().addAll("btn-action-sm", "btn-action-sm-clear");
         btnLimpiarLoc.setOnAction(e -> limpiarFormularioUbicacion());
-        Tooltip.install(btnLimpiarLoc, new Tooltip("Limpiar Formulario"));
+        Tooltip.install(btnLimpiarLoc, new Tooltip("Limpiar"));
 
         FontAwesomeIconView iconDelLoc = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
         iconDelLoc.setFill(Color.WHITE);
         btnEliminarLoc = new Button("", iconDelLoc);
-        btnEliminarLoc.setStyle("-fx-background-color: #dc3545; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnEliminarLoc.getStyleClass().addAll("btn-action-sm", "btn-action-sm-delete");
         btnEliminarLoc.setOnAction(e -> eliminarUbicacion());
-        Tooltip.install(btnEliminarLoc, new Tooltip("Eliminar Ubicación"));
+        Tooltip.install(btnEliminarLoc, new Tooltip("Eliminar"));
 
-        FontAwesomeIconView iconBatch = new FontAwesomeIconView(FontAwesomeIcon.COGS);
+        FontAwesomeIconView iconBatch = new FontAwesomeIconView(FontAwesomeIcon.PLUS_SQUARE);
         iconBatch.setFill(Color.WHITE);
         btnGenerarLote = new Button("", iconBatch);
-        btnGenerarLote.setStyle("-fx-background-color: #28a745; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnGenerarLote.getStyleClass().addAll("btn-action-sm");
+        btnGenerarLote.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-cursor: hand;");
         btnGenerarLote.setOnAction(e -> abrirGeneradorLote());
         Tooltip.install(btnGenerarLote, new Tooltip("Generación en Lote"));
 

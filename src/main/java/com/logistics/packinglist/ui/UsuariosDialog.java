@@ -1,4 +1,9 @@
 package com.logistics.packinglist.ui;
+import com.logistics.packinglist.model.RoleModel;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import java.util.Optional;
+import javafx.application.Platform;
 
 import com.logistics.packinglist.model.CompanyModel;
 import com.logistics.packinglist.model.DepositModel;
@@ -49,7 +54,8 @@ public class UsuariosDialog extends Stage {
     private TextField txtApellido;
     private TextField txtEmail;
     private PasswordField txtPassword;
-    private ComboBox<String> cmbRol;
+    private ComboBox<RoleModel> cmbRol;
+    private Button btnNuevoRol;
     private ComboBox<String> cmbEstado;
     private ComboBox<CompanyModel> cmbEmpresa;
     private ComboBox<DepositModel> cmbDeposito;
@@ -190,18 +196,21 @@ public class UsuariosDialog extends Stage {
         txtPassword.setMaxWidth(Double.MAX_VALUE);
 
         cmbRol = new ComboBox<>();
-        List<String> roles = new ArrayList<>();
-        if (isAdminSis) {
-            roles.add("ADMINSIS");
-        }
-        roles.add("ADMIN_BODEGA");
-        roles.add("ASISTENTE_DOCUMENTAL");
-        roles.add("ASISTENTE_BODEGA");
-        roles.add("GESTOR_COMERCIAL");
-        cmbRol.setItems(FXCollections.observableArrayList(roles));
         cmbRol.setPromptText("Seleccione Rol...");
         cmbRol.setStyle("-fx-background-radius: 4px; -fx-border-radius: 4px; -fx-font-size: 10px;");
         cmbRol.setMaxWidth(Double.MAX_VALUE);
+        
+        de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView iconPlusRole = new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.PLUS);
+        iconPlusRole.setFill(javafx.scene.paint.Color.WHITE);
+        btnNuevoRol = new Button("", iconPlusRole);
+        btnNuevoRol.getStyleClass().addAll("btn-action-sm");
+        btnNuevoRol.setStyle("-fx-background-color: #28a745; -fx-cursor: hand; -fx-padding: 2px 5px;");
+        btnNuevoRol.setOnAction(e -> abrirDialogoNuevoRol());
+        Tooltip.install(btnNuevoRol, new Tooltip("Nuevo Rol"));
+
+        HBox rolBox = new HBox(5, cmbRol, btnNuevoRol);
+        HBox.setHgrow(cmbRol, javafx.scene.layout.Priority.ALWAYS);
+
 
         lblEstado = crearLabel("Estado:");
         cmbEstado = new ComboBox<>(FXCollections.observableArrayList("ACTIVO", "INACTIVO"));
@@ -254,7 +263,7 @@ public class UsuariosDialog extends Stage {
         grid.add(txtPassword, 3, 1);
 
         grid.add(crearLabel("Rol:"), 0, 2);
-        grid.add(cmbRol, 1, 2);
+        grid.add(rolBox, 1, 2);
 
         int rowOffset = 3;
         if (isAdminSis) {
@@ -289,24 +298,24 @@ public class UsuariosDialog extends Stage {
         // Botones
         FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconSave.setFill(Color.WHITE);
-        btnAdd = new Button("", new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.SAVE));
-        btnAdd.getStyleClass().add("btn-guardar");
-        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
+        btnAdd = new Button("", iconSave);
+        btnAdd.getStyleClass().addAll("btn-action-sm", "btn-action-sm-save");
         btnAdd.setOnAction(e -> guardar());
+        Tooltip.install(btnAdd, new Tooltip("Guardar"));
+
+        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
+        iconClear.setFill(Color.WHITE);
+        btnClear = new Button("", iconClear);
+        btnClear.getStyleClass().addAll("btn-action-sm", "btn-action-sm-clear");
+        btnClear.setOnAction(e -> limpiarFormulario());
+        Tooltip.install(btnClear, new Tooltip("Limpiar"));
 
         FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
         iconDel.setFill(Color.WHITE);
         btnDelete = new Button("", iconDel);
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnDelete.getStyleClass().addAll("btn-action-sm", "btn-action-sm-delete");
         btnDelete.setOnAction(e -> eliminar());
         Tooltip.install(btnDelete, new Tooltip("Eliminar"));
-
-        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
-        iconClear.setFill(Color.WHITE);
-        btnClear = new Button("", new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.UNDO));
-        btnClear.getStyleClass().add("btn-limpiar");
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnClear.setOnAction(e -> limpiarFormulario());
 
         HBox actionRow = new HBox(8, btnAdd, btnClear, btnDelete);
         actionRow.setAlignment(Pos.CENTER_RIGHT);
@@ -320,7 +329,14 @@ public class UsuariosDialog extends Stage {
                 txtApellido.setText(newSel.getApellido());
                 txtEmail.setText(newSel.getEmail());
                 txtEmail.setDisable(true); // Email no editable
-                cmbRol.setValue(newSel.getRole());
+                
+                for (RoleModel r : cmbRol.getItems()) {
+                    if (r.getName().equals(newSel.getRole())) {
+                        cmbRol.setValue(r);
+                        break;
+                    }
+                }
+
                 cmbEstado.setValue(newSel.getEstado());
 
                 txtPassword.clear();
@@ -491,7 +507,7 @@ public class UsuariosDialog extends Stage {
         String apellido = txtApellido.getText().trim();
         String email = txtEmail.getText().trim();
         String password = txtPassword.getText();
-        String rol = cmbRol.getValue();
+        String rol = cmbRol.getValue() != null ? cmbRol.getValue().getName() : null;
         String estado = cmbEstado.getValue();
         WarehouseModel bodega = cmbBodega.getValue();
         CompanyModel empresa = cmbEmpresa.getValue();
@@ -607,4 +623,61 @@ public class UsuariosDialog extends Stage {
         lbl.setStyle("-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 9.5px;");
         return lbl;
     }
+
+    private void cargarRoles(String companyId) {
+        new Thread(() -> {
+            try {
+                List<RoleModel> roles = com.logistics.packinglist.service.MantenimientoService.getInstance().obtenerRoles(companyId);
+                if (isAdminSis && companyId == null) {
+                    RoleModel adminSis = new RoleModel();
+                    adminSis.setName("ADMINSIS");
+                    roles.add(0, adminSis);
+                }
+                Platform.runLater(() -> {
+                    cmbRol.setItems(javafx.collections.FXCollections.observableArrayList(roles));
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void abrirDialogoNuevoRol() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nuevo Rol");
+        dialog.setHeaderText("Crear un nuevo rol personalizado");
+        dialog.setContentText("Nombre del Rol:");
+        
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(nombre -> {
+            TextInputDialog descDialog = new TextInputDialog();
+            descDialog.setTitle("Descripción");
+            descDialog.setHeaderText("Descripción del Rol (opcional)");
+            descDialog.setContentText("Descripción:");
+            Optional<String> descResult = descDialog.showAndWait();
+            
+            RoleModel nuevoRol = new RoleModel();
+            nuevoRol.setName(nombre.toUpperCase());
+            descResult.ifPresent(nuevoRol::setDescription);
+            
+            if (isAdminSis && cmbEmpresa.getValue() != null) {
+                nuevoRol.setCompanyId(cmbEmpresa.getValue().getId());
+            } else if (!isAdminSis) {
+                nuevoRol.setCompanyId(com.logistics.packinglist.service.AuthService.getInstance().getCompanyId());
+            }
+            
+            new Thread(() -> {
+                try {
+                    RoleModel guardado = com.logistics.packinglist.service.MantenimientoService.getInstance().crearRol(nuevoRol);
+                    Platform.runLater(() -> {
+                        cmbRol.getItems().add(guardado);
+                        cmbRol.setValue(guardado);
+                    });
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }).start();
+        });
+    }
+
 }

@@ -331,24 +331,24 @@ public class ClientesDialog extends Stage {
         // Botones de acción
         FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconSave.setFill(Color.WHITE);
-        btnAdd = new Button("", new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.SAVE));
-        btnAdd.getStyleClass().add("btn-guardar");
-        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
+        btnAdd = new Button("", iconSave);
+        btnAdd.getStyleClass().addAll("btn-action-sm", "btn-action-sm-save");
         btnAdd.setOnAction(e -> guardar());
+        Tooltip.install(btnAdd, new Tooltip("Guardar"));
+
+        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
+        iconClear.setFill(Color.WHITE);
+        btnClear = new Button("", iconClear);
+        btnClear.getStyleClass().addAll("btn-action-sm", "btn-action-sm-clear");
+        btnClear.setOnAction(e -> limpiarFormulario());
+        Tooltip.install(btnClear, new Tooltip("Limpiar"));
 
         FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
         iconDel.setFill(Color.WHITE);
         btnDelete = new Button("", iconDel);
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnDelete.getStyleClass().addAll("btn-action-sm", "btn-action-sm-delete");
         btnDelete.setOnAction(e -> eliminar());
         Tooltip.install(btnDelete, new Tooltip("Eliminar"));
-
-        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
-        iconClear.setFill(Color.WHITE);
-        btnClear = new Button("", new de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView(de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.UNDO));
-        btnClear.getStyleClass().add("btn-limpiar");
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        btnClear.setOnAction(e -> limpiarFormulario());
 
         HBox actionRow = new HBox(8, btnAdd, btnClear, btnDelete);
         actionRow.setAlignment(Pos.CENTER_RIGHT);

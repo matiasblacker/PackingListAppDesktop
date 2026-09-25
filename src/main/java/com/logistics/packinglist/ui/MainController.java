@@ -61,7 +61,10 @@ public class MainController extends BorderPane {
 
     private PackingList packingListActual = null;
     private File logoFile = null;
-    private final java.util.Set<String> activePermissions = new java.util.HashSet<>();
+    private final java.util.Set<String> companyPerms = new java.util.HashSet<>();
+    private final java.util.Set<String> depositPerms = new java.util.HashSet<>();
+    private final java.util.Set<String> warehousePerms = new java.util.HashSet<>();
+    private final java.util.Set<String> rolePerms = new java.util.HashSet<>();
 
     private TabPane tabPane;
     private BorderPane homePane;
@@ -346,10 +349,6 @@ public class MainController extends BorderPane {
                 itemEmpresas.setOnAction(e -> abrirTab("Empresas", () -> new EmpresasDialog(getScene().getWindow())));
                 menuMantenimiento.getItems().add(itemEmpresas);
 
-                MenuItem itemUsuarios = crearItem("Usuarios", FontAwesomeIcon.USERS);
-                itemUsuarios.setOnAction(e -> abrirTab("Usuarios", () -> new UsuariosDialog(getScene().getWindow())));
-                menuMantenimiento.getItems().add(itemUsuarios);
-
                 MenuItem itemDepositos = crearItem("Depósitos", FontAwesomeIcon.BUILDING);
                 itemDepositos.setOnAction(e -> abrirTab("Depósitos", () -> new DepositosDialog(getScene().getWindow())));
                 menuMantenimiento.getItems().add(itemDepositos);
@@ -358,11 +357,13 @@ public class MainController extends BorderPane {
                 itemBodegas.setOnAction(e -> abrirTab("Bodegas", () -> new BodegasDialog(getScene().getWindow())));
                 menuMantenimiento.getItems().add(itemBodegas);
 
+                MenuItem itemUsuarios = crearItem("Usuarios", FontAwesomeIcon.USERS);
+                itemUsuarios.setOnAction(e -> abrirTab("Usuarios", () -> new UsuariosDialog(getScene().getWindow())));
+                menuMantenimiento.getItems().add(itemUsuarios);
+
                 MenuItem itemPermisos = crearItem("Permisos", FontAwesomeIcon.SHIELD);
                 itemPermisos.setOnAction(e -> abrirTab("Permisos", () -> new PermisosDialog(getScene().getWindow())));
                 menuMantenimiento.getItems().add(itemPermisos);
-
-
             }
 
             MenuItem itemProveedores = crearItem("Proveedores", FontAwesomeIcon.TRUCK);
@@ -400,7 +401,7 @@ public class MainController extends BorderPane {
                 }
             });
 
-            menuMantenimiento.getItems().addAll(itemProveedores, itemClientes, itemProductos, itemUbicaciones, itemCarriers);
+            menuMantenimiento.getItems().addAll(itemClientes, itemProveedores, itemProductos, itemUbicaciones, itemCarriers);
         }
 
         // --- Menu Operaciones WMS ---
@@ -2194,79 +2195,95 @@ public class MainController extends BorderPane {
         return true;
     }
 
-    public boolean userHasPermission(String perm) {
+        public boolean userHasPermission(String perm) {
         com.logistics.packinglist.service.AuthService auth = com.logistics.packinglist.service.AuthService.getInstance();
         if ("ADMINSIS".equalsIgnoreCase(auth.getRole())) {
             return true;
         }
-        return activePermissions.isEmpty() || activePermissions.contains(perm);
+        
+        if (!companyPerms.isEmpty() && !companyPerms.contains(perm)) return false;
+        if (!depositPerms.isEmpty() && !depositPerms.contains(perm)) return false;
+        if (!warehousePerms.isEmpty() && !warehousePerms.contains(perm)) return false;
+        if (!rolePerms.isEmpty() && !rolePerms.contains(perm)) return false;
+        
+        return true;
     }
 
     private void aplicarPermisosEmpresa(com.logistics.packinglist.model.CompanyModel company) {
-        activePermissions.clear();
-        if (company == null) {
+        companyPerms.clear();
+        depositPerms.clear();
+        warehousePerms.clear();
+        rolePerms.clear();
+
+        if (company != null) {
+            String cp = company.getPermisos();
+            if (cp != null && !cp.isEmpty()) {
+                companyPerms.addAll(java.util.Arrays.asList(cp.split(",")));
+            }
+
+            com.logistics.packinglist.service.AuthService auth = com.logistics.packinglist.service.AuthService.getInstance();
+            com.logistics.packinglist.service.MantenimientoService service = new com.logistics.packinglist.service.MantenimientoService();
+
+            new Thread(() -> {
+                try {
+                    String activeRoleId = auth.getRole();
+                    if (activeRoleId != null) {
+                        java.util.List<com.logistics.packinglist.model.RoleModel> roles = service.obtenerRoles(auth.getCompanyId());
+                        for (com.logistics.packinglist.model.RoleModel r : roles) {
+                            if (r.getId().equals(activeRoleId)) {
+                                String rp = r.getPermisos();
+                                if (rp != null && !rp.isEmpty()) {
+                                    rolePerms.addAll(java.util.Arrays.asList(rp.split(",")));
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    String activeWarehouseId = auth.getWarehouseId();
+                    if (activeWarehouseId != null) {
+                        com.logistics.packinglist.model.WarehouseModel selectedWarehouse = service.obtenerBodegaPorId(activeWarehouseId);
+                        if (selectedWarehouse != null) {
+                            String wp = selectedWarehouse.getPermisos();
+                            if (wp != null && !wp.isEmpty()) {
+                                warehousePerms.addAll(java.util.Arrays.asList(wp.split(",")));
+                            }
+
+                            if (selectedWarehouse.getDepositId() != null) {
+                                java.util.List<com.logistics.packinglist.model.DepositModel> deposits = service.obtenerDepositos();
+                                for (com.logistics.packinglist.model.DepositModel d : deposits) {
+                                    if (d.getId().equals(selectedWarehouse.getDepositId())) {
+                                        String dp = d.getPermisos();
+                                        if (dp != null && !dp.isEmpty()) {
+                                            depositPerms.addAll(java.util.Arrays.asList(dp.split(",")));
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    javafx.application.Platform.runLater(() -> {
+                        if (itemPackingLists != null) itemPackingLists.setVisible(userHasPermission("FILE_PACKING_LISTS"));
+                        if (itemCrearManual != null) itemCrearManual.setVisible(userHasPermission("FILE_CREATE_MANUAL"));
+                        if (itemEditarPacking != null) itemEditarPacking.setVisible(userHasPermission("FILE_EDIT_PACKING"));
+                        if (itemAgrupar != null) itemAgrupar.setVisible(userHasPermission("FILE_AGRUPAR"));
+                        if (itemContenedor != null) itemContenedor.setVisible(userHasPermission("FILE_CONTENEDOR"));
+
+                        if (itemUbicaciones != null) itemUbicaciones.setVisible(userHasPermission("OP_UBICACIONES"));
+                        if (itemStock != null) itemStock.setVisible(userHasPermission("OP_STOCK"));
+                        if (itemNotas != null) itemNotas.setVisible(userHasPermission("OP_NOTAS"));
+                        if (itemDespachos != null) itemDespachos.setVisible(userHasPermission("OP_DESPACHOS"));
+                        if (itemAnuncios != null) itemAnuncios.setVisible(userHasPermission("OP_ANUNCIOS"));
+                        if (itemRecepciones != null) itemRecepciones.setVisible(userHasPermission("OP_RECEPCIONES"));
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } else {
             setPermissionStatus(true);
-            return;
-        }
-        String permStr = company.getPermisos();
-        if (permStr == null || permStr.trim().isEmpty()) {
-            // Enable/show all by default
-            setPermissionStatus(true);
-            return;
-        }
-
-        java.util.Set<String> perms = new java.util.HashSet<>(java.util.Arrays.asList(permStr.split(",")));
-        activePermissions.addAll(perms);
-
-        // Archivo menu items
-        if (itemPackingLists != null)
-            itemPackingLists.setVisible(perms.contains("FILE_PACKING_LISTS"));
-        if (itemCrearManual != null)
-            itemCrearManual.setVisible(perms.contains("FILE_CREATE_MANUAL"));
-        if (itemEditarPacking != null)
-            itemEditarPacking.setVisible(perms.contains("FILE_EDIT_PACKING"));
-        if (itemAgrupar != null)
-            itemAgrupar.setVisible(perms.contains("FILE_AGRUPAR"));
-        if (itemContenedor != null)
-            itemContenedor.setVisible(perms.contains("FILE_CONTENEDOR"));
-
-        // WMS items
-        if (itemUbicaciones != null)
-            itemUbicaciones.setVisible(perms.contains("OP_UBICACIONES"));
-        if (itemStock != null)
-            itemStock.setVisible(perms.contains("OP_STOCK"));
-        if (itemNotas != null)
-            itemNotas.setVisible(perms.contains("OP_NOTAS"));
-        if (itemDespachos != null)
-            itemDespachos.setVisible(perms.contains("OP_DESPACHOS"));
-        if (itemAnuncios != null)
-            itemAnuncios.setVisible(perms.contains("OP_ANUNCIOS"));
-        if (itemRecepciones != null)
-            itemRecepciones.setVisible(perms.contains("OP_RECEPCIONES"));
-
-        // Hide entire menuWMS if no WMS features are visible
-        if (menuWMS != null) {
-            boolean hasAnyWms = perms.contains("OP_STOCK")
-                    || perms.contains("OP_NOTAS") || perms.contains("OP_DESPACHOS")
-                    || perms.contains("OP_ANUNCIOS") || perms.contains("OP_RECEPCIONES")
-                    || perms.contains("FILE_PACKING_LISTS");
-            menuWMS.setVisible(hasAnyWms);
-        }
-        if (itemPackingList != null) {
-            itemPackingList.setVisible(perms.contains("FILE_PACKING_LISTS"));
-        }
-        if (menuArchivo != null) {
-            boolean hasAnyArchivo = perms.contains("FILE_PACKING_LISTS")
-                    || perms.contains("FILE_CREATE_MANUAL")
-                    || perms.contains("FILE_EDIT_PACKING")
-                    || perms.contains("FILE_AGRUPAR")
-                    || perms.contains("FILE_CONTENEDOR");
-            menuArchivo.setVisible(hasAnyArchivo);
-        }
-        if (menuExportar != null) {
-            boolean hasAnyExport = perms.contains("FILE_PACKING_LISTS")
-                    || perms.contains("FILE_CREATE_MANUAL");
-            menuExportar.setVisible(hasAnyExport);
         }
     }
 

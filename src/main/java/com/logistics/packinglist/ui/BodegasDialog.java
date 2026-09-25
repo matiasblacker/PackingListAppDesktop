@@ -282,38 +282,23 @@ public class BodegasDialog extends Stage {
 
         // Botones de acción
         FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
-        iconSave.setSize("14px");
         iconSave.setFill(Color.WHITE);
         btnAdd = new Button("", iconSave);
-        btnAdd.getStyleClass().add("btn-guardar");
-        btnAdd.setStyle("-fx-background-color: #0F3E6E; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
-        btnAdd.setPrefSize(44, 32);
-        btnAdd.setMinSize(44, 32);
-        btnAdd.setMaxSize(44, 32);
+        btnAdd.getStyleClass().addAll("btn-action-sm", "btn-action-sm-save");
         btnAdd.setOnAction(e -> guardar());
         Tooltip.install(btnAdd, new Tooltip("Guardar"));
 
         FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
-        iconClear.setSize("14px");
         iconClear.setFill(Color.WHITE);
         btnClear = new Button("", iconClear);
-        btnClear.getStyleClass().add("btn-limpiar");
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
-        btnClear.setPrefSize(44, 32);
-        btnClear.setMinSize(44, 32);
-        btnClear.setMaxSize(44, 32);
+        btnClear.getStyleClass().addAll("btn-action-sm", "btn-action-sm-clear");
         btnClear.setOnAction(e -> limpiarFormulario());
-        Tooltip.install(btnClear, new Tooltip("Limpiar Formulario"));
+        Tooltip.install(btnClear, new Tooltip("Limpiar"));
 
         FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-        iconDel.setSize("14px");
         iconDel.setFill(Color.WHITE);
         btnDelete = new Button("", iconDel);
-        btnDelete.getStyleClass().add("btn-cancelar");
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 4px;");
-        btnDelete.setPrefSize(44, 32);
-        btnDelete.setMinSize(44, 32);
-        btnDelete.setMaxSize(44, 32);
+        btnDelete.getStyleClass().addAll("btn-action-sm", "btn-action-sm-delete");
         btnDelete.setOnAction(e -> eliminar());
         Tooltip.install(btnDelete, new Tooltip("Eliminar"));
 

@@ -23,6 +23,7 @@ public class MantenimientoService {
     private final UserApiService userApiService = new UserApiService();
     private final WarehouseZoneApiService warehouseZoneApiService = new WarehouseZoneApiService();
     private final DepositApiService depositApiService = new DepositApiService();
+    private final RoleApiService roleApiService = new RoleApiService();
 
     private static MantenimientoService instance;
     
@@ -422,5 +423,25 @@ public class MantenimientoService {
 
     public List<WarehouseModel> obtenerBodegasPorDeposito(String depositId) throws Exception {
         return depositApiService.obtenerBodegasPorDeposito(depositId);
+    }
+
+    // Role methods
+    public java.util.List<RoleModel> obtenerRoles(String companyId) throws Exception {
+        if (companyId != null && !companyId.isEmpty()) {
+            return roleApiService.getAll("?companyId=" + companyId);
+        }
+        return roleApiService.getAll();
+    }
+
+    public RoleModel crearRol(RoleModel rol) throws Exception {
+        return roleApiService.create(rol);
+    }
+
+    public RoleModel actualizarRol(String id, RoleModel rol) throws Exception {
+        return roleApiService.update(id, rol);
+    }
+
+    public void eliminarRol(String id) throws Exception {
+        roleApiService.delete(id);
     }
 }

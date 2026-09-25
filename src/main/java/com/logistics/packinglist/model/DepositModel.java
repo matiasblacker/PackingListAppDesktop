@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DepositModel {
     private String id;
+    private String permisos;
     private String companyId;
     private String companyNombre;
     private String nombre;

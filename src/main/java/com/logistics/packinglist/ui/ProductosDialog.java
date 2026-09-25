@@ -350,26 +350,23 @@ public class ProductosDialog extends Stage {
         FontAwesomeIconView iconSave = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconSave.setFill(Color.WHITE);
         btnAdd = new Button("", iconSave);
-        btnAdd.setStyle("-fx-background-color: cornflowerblue; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnAdd.getStyleClass().addAll("btn-action-sm", "btn-action-sm-save");
         btnAdd.setOnAction(e -> guardar());
         Tooltip.install(btnAdd, new Tooltip("Guardar"));
-        Tooltip.install(btnAdd, new Tooltip("Guardar Producto"));
 
-        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.UNDO);
+        FontAwesomeIconView iconClear = new FontAwesomeIconView(FontAwesomeIcon.ERASER);
         iconClear.setFill(Color.WHITE);
         btnClear = new Button("", iconClear);
-        btnClear.setStyle("-fx-background-color: #6c757d; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnClear.getStyleClass().addAll("btn-action-sm", "btn-action-sm-clear");
         btnClear.setOnAction(e -> limpiarFormulario());
         Tooltip.install(btnClear, new Tooltip("Limpiar"));
-        Tooltip.install(btnClear, new Tooltip("Limpiar Formulario"));
 
         FontAwesomeIconView iconDel = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
         iconDel.setFill(Color.WHITE);
         btnDelete = new Button("", iconDel);
-        btnDelete.setStyle("-fx-background-color: #dc3545; -fx-cursor: hand; -fx-padding: 6px 14px; -fx-background-radius: 4px;");
+        btnDelete.getStyleClass().addAll("btn-action-sm", "btn-action-sm-delete");
         btnDelete.setOnAction(e -> eliminar());
         Tooltip.install(btnDelete, new Tooltip("Eliminar"));
-        Tooltip.install(btnDelete, new Tooltip("Eliminar Producto"));
 
         HBox actionRow = new HBox(8, btnAdd, btnClear, btnDelete);
         actionRow.setAlignment(Pos.CENTER_RIGHT);

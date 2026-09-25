@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WarehouseModel {
     private String id;
+    private String permisos;
     private String companyId;
     private String nombre;
     private String codigo;

@@ -182,6 +182,41 @@
     -fx-fill: white !important;
 }
 
+/* Standardized Small Action Buttons for Maintenance Dialogs */
+.btn-action-sm {
+    -fx-min-width: 32px !important;
+    -fx-pref-width: 32px !important;
+    -fx-max-width: 32px !important;
+    -fx-min-height: 26px !important;
+    -fx-pref-height: 26px !important;
+    -fx-max-height: 26px !important;
+    -fx-padding: 0 !important;
+    -fx-alignment: center !important;
+    -fx-background-radius: 4px !important;
+    -fx-cursor: hand !important;
+}
+.btn-action-sm .glyph-icon {
+    -fx-fill: white !important;
+}
+.btn-action-sm-save {
+    -fx-background-color: #0F3E6E !important;
+}
+.btn-action-sm-save:hover {
+    -fx-background-color: #164e8a !important;
+}
+.btn-action-sm-clear {
+    -fx-background-color: #6c757d !important;
+}
+.btn-action-sm-clear:hover {
+    -fx-background-color: #5a6268 !important;
+}
+.btn-action-sm-delete {
+    -fx-background-color: #dc3545 !important;
+}
+.btn-action-sm-delete:hover {
+    -fx-background-color: #bd2130 !important;
+}
+
 /* Scroll bars */
 .scroll-bar:vertical .thumb,
 .scroll-bar:horizontal .thumb {
