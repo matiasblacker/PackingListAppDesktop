@@ -71,10 +71,11 @@ public class WarehouseApiService extends BaseApiService {
                 .header("Authorization", "Bearer " + getToken())
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(warehouse)))
-                .timeout(Duration.ofSeconds(5))
+                .timeout(Duration.ofSeconds(10))
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        processErrorResponse(response);
         return parseSingle(response.body(), WarehouseModel.class);
     }
 
@@ -84,10 +85,11 @@ public class WarehouseApiService extends BaseApiService {
                 .header("Authorization", "Bearer " + getToken())
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(warehouse)))
-                .timeout(Duration.ofSeconds(5))
+                .timeout(Duration.ofSeconds(10))
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        processErrorResponse(response);
         return parseSingle(response.body(), WarehouseModel.class);
     }
 

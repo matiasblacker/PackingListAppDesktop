@@ -368,6 +368,29 @@ public class BodegasDialog extends Stage {
         }).start();
     }
 
+    public void refreshDepositos() {
+        new Thread(() -> {
+            try {
+                List<DepositModel> depositos = service.obtenerDepositos();
+                javafx.application.Platform.runLater(() -> {
+                    String selectedId = selectedDeposit != null ? selectedDeposit.getId() : null;
+                    depositsList.setAll(depositos);
+                    // Re-select the previously selected deposit if still present
+                    if (selectedId != null) {
+                        for (DepositModel d : depositsList) {
+                            if (selectedId.equals(d.getId())) {
+                                tablaDepositos.getSelectionModel().select(d);
+                                break;
+                            }
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                javafx.application.Platform.runLater(() -> alerta("Error", e.getMessage()));
+            }
+        }).start();
+    }
+
     private void guardar() {
         if (selectedDeposit == null) {
             alerta("Depósito requerido", "Debe seleccionar un Depósito de la lista obligatoriamente.");
@@ -410,6 +433,7 @@ public class BodegasDialog extends Stage {
                     if (selectedDeposit != null) {
                         cargarBodegasDeDeposito(selectedDeposit.getId());
                     }
+                    refreshDepositos();
                     informacion("Éxito", "Bodega guardada correctamente.");
                 });
             } catch (Exception e) {
