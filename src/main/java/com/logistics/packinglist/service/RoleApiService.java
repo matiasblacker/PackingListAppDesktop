@@ -58,8 +58,10 @@ public class RoleApiService extends BaseApiService {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         processErrorResponse(response);
+        // RoleController returns plain JSON (no ApiResponse wrapper)
         return gson.fromJson(response.body(), RoleModel.class);
     }
+
 
     public void delete(String id) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
